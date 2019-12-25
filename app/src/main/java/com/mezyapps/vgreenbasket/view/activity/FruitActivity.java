@@ -137,7 +137,6 @@ public class FruitActivity extends AppCompatActivity {
                         productListModelArrayList.clear();
                         String message = null, code = null;
                         if (successModule != null) {
-                            message = successModule.getMessage();
                             code = successModule.getCode();
                             if (code.equalsIgnoreCase("1")) {
 

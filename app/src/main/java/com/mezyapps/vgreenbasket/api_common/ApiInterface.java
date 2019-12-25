@@ -10,10 +10,26 @@ import retrofit2.http.POST;
 
 public interface ApiInterface {
 
-    @POST(EndApi.WS_LOGIN)
+    @POST(EndApi.LOGIN)
     @FormUrlEncoded
-    Call<SuccessModel> login(@Field("username") String mobile_no,
+    Call<SuccessModel> login(@Field("mobile_no") String mobile_no,
                              @Field("password") String password);
+
+    @POST(EndApi.LOCATION)
+    Call<SuccessModel> locationList();
+
+    @POST(EndApi.ROUTE)
+    @FormUrlEncoded
+    Call<SuccessModel> routeList(@Field("id") String location_id);
+
+    @POST(EndApi.SIGN_UP)
+    @FormUrlEncoded
+    Call<SuccessModel> signUp(@Field("name") String name,
+                              @Field("mobile_no") String mobile_no,
+                              @Field("address") String address,
+                              @Field("password") String password,
+                              @Field("location_id") String location_id,
+                              @Field("route_id") String route_id);
 
 
     @POST(EndApi.WS_PRODUCT_LIST)
