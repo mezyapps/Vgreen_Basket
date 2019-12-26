@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/iv_notification_image"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title"
+                android:textAllCaps="true"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textAllCaps="true"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold" />
+
+
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_notification_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

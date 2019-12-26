@@ -18,7 +18,6 @@
     <string name="orange">orange</string>
     <string name="watermelon">watermelon</string>
     <string name="banana">banana</string>
-    <string name="name">Name</string>
     <string name="sign_up">Sign Up</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="address">Address</string>
@@ -31,4 +30,9 @@
     <string name="profile">Profile</string>
     <string name="vegetable_list">Vegetable List</string>
     <string name="search_product">Search Product</string>
+    <string name="name">Name</string>
+    <string name="mobile_no">Mobile No</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="update_profile">Update Profile</string>
 </resources>

@@ -8,6 +8,7 @@ public class ConstantFields {
     public static final String NAME = "NAME";
     public static final String MOBILE_NO = "MOBILE_NO";
     public static final String LOCATION = "LOCATION";
+    public static final String ADDRESS = "ADDRESS";
 
 
 }

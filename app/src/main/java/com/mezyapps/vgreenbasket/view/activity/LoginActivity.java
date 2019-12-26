@@ -127,9 +127,10 @@ public class LoginActivity extends AppCompatActivity {
                                     String id=userProfileModelArrayList.get(0).getId();
                                     String name=userProfileModelArrayList.get(0).getName();
                                     String mobile=userProfileModelArrayList.get(0).getMobile_no();
+                                    String address=userProfileModelArrayList.get(0).getAddress();
 
                                     SharedLoginUtils.putLoginSharedUtils(LoginActivity.this);
-                                    SharedLoginUtils.addUserId(LoginActivity.this,id,name,mobile);
+                                    SharedLoginUtils.addUserId(LoginActivity.this,id,name,mobile,address);
                                     SuccessDialog successDialog=new SuccessDialog(LoginActivity.this);
                                     successDialog.showDialog("Login Successfully");
 

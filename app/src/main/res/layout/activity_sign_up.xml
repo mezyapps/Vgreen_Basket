@@ -49,8 +49,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -85,8 +85,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,8 +121,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,8 +160,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -193,8 +193,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -227,8 +227,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -244,22 +244,31 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-
-                    <AutoCompleteTextView
-                        android:id="@+id/textPassword"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/shape_edit_background"
-                        android:inputType="textPassword"
-                        android:padding="10dp"
-                        android:textAllCaps="true" />
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="true">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/textPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/shape_edit_background"
+                            android:inputType="textPassword"
+                            android:padding="10dp"
+                            android:textAllCaps="true"
+                            tools:ignore="LabelFor" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_sign_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -267,7 +276,6 @@
                 android:background="@drawable/shape_sign_in"
                 android:text="@string/sign_up"
                 android:textColor="@color/white"
-                android:id="@+id/btn_sign_up"
                 android:textStyle="bold" />
 
         </LinearLayout>

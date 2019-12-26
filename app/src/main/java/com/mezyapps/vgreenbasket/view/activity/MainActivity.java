@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     private boolean doubleBackToExitPressedOnce = false;
     private Dialog dialog_logout;
-    private TextView text_version_name, text_app_name;
-    private LinearLayout ll_login,ll_sign_up;
+    private TextView text_version_name, text_app_name,textName,textMobileNumber;
+    private LinearLayout ll_login,ll_sign_up,ll_login_sign_up;
 
 
     @Override
@@ -67,6 +67,18 @@ public class MainActivity extends AppCompatActivity {
         View view=navigationView.getHeaderView(0);
         ll_login = view.findViewById(R.id.ll_login);
         ll_sign_up = view.findViewById(R.id.ll_sign_up);
+        textMobileNumber = view.findViewById(R.id.textMobileNumber);
+        textName = view.findViewById(R.id.textName);
+        ll_login_sign_up = view.findViewById(R.id.ll_login_sign_up);
+
+        String name=SharedLoginUtils.getUserName(MainActivity.this);
+        String mobile_no=SharedLoginUtils.getUserMobile(MainActivity.this);
+
+        if(!name.equalsIgnoreCase("") && !mobile_no.equalsIgnoreCase("")) {
+            textName.setText(name);
+            textMobileNumber.setText(mobile_no);
+            ll_login_sign_up.setVisibility(View.GONE);
+        }
     }
 
     private void events() {
@@ -111,12 +123,14 @@ public class MainActivity extends AppCompatActivity {
         ll_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this,SignUpActivity.class));
             }
         });
         ll_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
             }
         });
@@ -204,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic("VgreenClient");
-                SharedLoginUtils.removeLoginSharedUtils(MainActivity.this);
+                SharedLoginUtils.removeUserSharedUtils(MainActivity.this);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
