@@ -36,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public static ApiInterface apiInterface;
 
-    private String location_id="",route_id="",user_id;
+    private String location_id="",location_name="",route_id="",route_name="",user_id;
     //Spinner Location
     private ArrayList<LocationModel> locationModelArrayList = new ArrayList<>();
     private ArrayList<String> location_string_arrayList = new ArrayList<>();
@@ -63,9 +63,11 @@ public class ProfileActivity extends AppCompatActivity {
         SpinnerRoute=findViewById(R.id.SpinnerRoute);
 
         String name= SharedLoginUtils.getUserName(ProfileActivity.this);
-        String user_id= SharedLoginUtils.getUserId(ProfileActivity.this);
+        user_id= SharedLoginUtils.getUserId(ProfileActivity.this);
         String address=SharedLoginUtils.getUserAddress(ProfileActivity.this);
         String mobile_no=SharedLoginUtils.getUserMobile(ProfileActivity.this);
+        location_id=SharedLoginUtils.getUserLocation(ProfileActivity.this);
+        route_id=SharedLoginUtils.getUserRoute(ProfileActivity.this);
 
         textName.setText(name);
         textAddress.setText(address);
@@ -155,7 +157,6 @@ public class ProfileActivity extends AppCompatActivity {
                                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     SpinnerLocation.setAdapter(arrayAdapter);
                                     arrayAdapter.notifyDataSetChanged();
-
                                 }
 
                             } else {

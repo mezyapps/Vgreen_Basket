@@ -141,15 +141,16 @@ public class VegetableActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         SuccessModel successModule = response.body();
                         productListModelArrayList.clear();
-                        String message = null, code = null;
+                        String message = null, code = null,folder;
                         if (successModule != null) {
                             code = successModule.getCode();
+                            folder = successModule.getFolder();
                             if (code.equalsIgnoreCase("1")) {
 
                                 productListModelArrayList=successModule.getProductListModelArrayList();
                                 if(productListModelArrayList.size()!=0) {
                                     Collections.reverse(productListModelArrayList);
-                                    productListAdapter=new ProductListAdapter(VegetableActivity.this,productListModelArrayList);
+                                    productListAdapter=new ProductListAdapter(VegetableActivity.this,productListModelArrayList,folder);
                                     recyclerView_Vegetable.setAdapter(productListAdapter);
                                     productListAdapter.notifyDataSetChanged();
                                 }

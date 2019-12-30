@@ -5,11 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class SuccessModel {
-    String code;
-    String msg;
+    private  String code;
+    private String msg;
+    private String folder;
 
-    @SerializedName("prod_list")
-    private ArrayList<ProductListModel> productListModelArrayList;
 
     @SerializedName("location_list")
     private ArrayList<LocationModel> locationModelArrayList;
@@ -22,6 +21,9 @@ public class SuccessModel {
 
     @SerializedName("login")
     private ArrayList<UserProfileModel> userProfileLoginModelArrayList;
+
+    @SerializedName("product_list")
+    private ArrayList<ProductListModel> productListModelArrayList;
 
     public ArrayList<UserProfileModel> getUserProfileLoginModelArrayList() {
         return userProfileLoginModelArrayList;
@@ -57,6 +59,14 @@ public class SuccessModel {
 
     public String getCode() {
         return code;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
     }
 
     public void setCode(String code) {

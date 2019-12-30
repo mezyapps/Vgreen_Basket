@@ -32,9 +32,9 @@ public interface ApiInterface {
                               @Field("route_id") String route_id);
 
 
-    @POST(EndApi.WS_PRODUCT_LIST)
+    @POST(EndApi.PRODUCT_LIST)
     @FormUrlEncoded
-    Call<SuccessModel> productList(@Field("prod_id") String prod_id);
+        Call<SuccessModel> productList(@Field("prod_type_id") String prod_id);
 
 
 }

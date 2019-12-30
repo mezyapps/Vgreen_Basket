@@ -28,7 +28,7 @@ public class SharedLoginUtils {
         editor.putString(ConstantFields.IS_LOGIN, "false");
         editor.commit();
     }
-    public static void addUserId(Context mContext,String user_id,String name,String mobile,String address)
+    public static void addUserId(Context mContext,String user_id,String name,String mobile,String address,String location,String route)
     {
         preferences = mContext.getSharedPreferences(ConstantFields.LOGIN_PREFERENCE, mContext.MODE_PRIVATE);
         editor = preferences.edit();
@@ -36,6 +36,8 @@ public class SharedLoginUtils {
         editor.putString(ConstantFields.NAME,name);
         editor.putString(ConstantFields.MOBILE_NO,mobile);
         editor.putString(ConstantFields.ADDRESS,address);
+        editor.putString(ConstantFields.LOCATION,location);
+        editor.putString(ConstantFields.ROUTE,route);
         editor.commit();
     }
 
@@ -58,6 +60,16 @@ public class SharedLoginUtils {
         preferences = mContext.getSharedPreferences(ConstantFields.LOGIN_PREFERENCE, mContext.MODE_PRIVATE);
         String mobile_no=preferences.getString(ConstantFields.MOBILE_NO, "");
         return mobile_no;
+    }
+    public static String  getUserLocation(Context mContext) {
+        preferences = mContext.getSharedPreferences(ConstantFields.LOGIN_PREFERENCE, mContext.MODE_PRIVATE);
+        String location=preferences.getString(ConstantFields.LOCATION, "");
+        return location;
+    }
+    public static String  getUserRoute(Context mContext) {
+        preferences = mContext.getSharedPreferences(ConstantFields.LOGIN_PREFERENCE, mContext.MODE_PRIVATE);
+        String route=preferences.getString(ConstantFields.ROUTE, "");
+        return route;
     }
     public static void removeUserSharedUtils(Context mContext) {
         preferences = mContext.getSharedPreferences(ConstantFields.LOGIN_PREFERENCE, mContext.MODE_PRIVATE);

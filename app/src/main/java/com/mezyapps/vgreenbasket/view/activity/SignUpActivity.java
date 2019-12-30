@@ -320,9 +320,11 @@ public class SignUpActivity extends AppCompatActivity {
                                     String name=userProfileModelArrayList.get(0).getName();
                                     String mobile=userProfileModelArrayList.get(0).getMobile_no();
                                     String address=userProfileModelArrayList.get(0).getAddress();
+                                    String location=userProfileModelArrayList.get(0).getLocation_id();
+                                    String route=userProfileModelArrayList.get(0).getRoute_id();
 
                                     SharedLoginUtils.putLoginSharedUtils(SignUpActivity.this);
-                                    SharedLoginUtils.addUserId(SignUpActivity.this,id,name,mobile,address);
+                                    SharedLoginUtils.addUserId(SignUpActivity.this,id,name,mobile,address,location,route);
                                     SuccessDialog successDialog=new SuccessDialog(SignUpActivity.this);
                                     successDialog.showDialog("Your Registration Successfully");
 

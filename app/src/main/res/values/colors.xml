@@ -20,12 +20,4 @@
     <color name="violet">#EE82EE</color>
     <color name="orange">#FFA500</color>
     <color name="edit_background">#EC9779</color>
-
-    <color name="source_member">#AB47BC </color>
-    <color name="source_not_interested">#CC3333 </color>
-    <color name="source_follow_up">#33FFFF </color>
-
-    <color name="chapter_member">#3399FF</color>
-    <color name="chapter_not_interested">#FF3333 </color>
-    <color name="chapter_follow_up">#FDD835</color>
 </resources>

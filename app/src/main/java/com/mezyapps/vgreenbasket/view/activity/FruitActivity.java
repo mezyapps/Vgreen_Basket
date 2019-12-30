@@ -135,15 +135,16 @@ public class FruitActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         SuccessModel successModule = response.body();
                         productListModelArrayList.clear();
-                        String message = null, code = null;
+                        String message = null, code = null,folder=null;
                         if (successModule != null) {
                             code = successModule.getCode();
+                            folder=successModule.getFolder();
                             if (code.equalsIgnoreCase("1")) {
 
                                 productListModelArrayList=successModule.getProductListModelArrayList();
                                 if(productListModelArrayList.size()!=0) {
                                     Collections.reverse(productListModelArrayList);
-                                    productListAdapter=new ProductListAdapter(FruitActivity.this,productListModelArrayList);
+                                    productListAdapter=new ProductListAdapter(FruitActivity.this,productListModelArrayList,folder);
                                     recyclerView_Fruit.setAdapter(productListAdapter);
                                     productListAdapter.notifyDataSetChanged();
                                 }
