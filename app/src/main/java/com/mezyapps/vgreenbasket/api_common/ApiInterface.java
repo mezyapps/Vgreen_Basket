@@ -34,7 +34,10 @@ public interface ApiInterface {
 
     @POST(EndApi.PRODUCT_LIST)
     @FormUrlEncoded
-        Call<SuccessModel> productList(@Field("prod_type_id") String prod_id);
+    Call<SuccessModel> productList(@Field("prod_type_id") String prod_id);
 
+
+    @POST(EndApi.NOTIFICATION)
+    Call<SuccessModel> notificationList();
 
 }

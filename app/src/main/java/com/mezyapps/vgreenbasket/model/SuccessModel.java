@@ -25,8 +25,20 @@ public class SuccessModel {
     @SerializedName("product_list")
     private ArrayList<ProductListModel> productListModelArrayList;
 
+    @SerializedName("notification_list")
+    private ArrayList<NotificationModel> notificationModelArrayList;
+
     public ArrayList<UserProfileModel> getUserProfileLoginModelArrayList() {
         return userProfileLoginModelArrayList;
+    }
+
+
+    public ArrayList<NotificationModel> getNotificationModelArrayList() {
+        return notificationModelArrayList;
+    }
+
+    public void setNotificationModelArrayList(ArrayList<NotificationModel> notificationModelArrayList) {
+        this.notificationModelArrayList = notificationModelArrayList;
     }
 
     public void setUserProfileLoginModelArrayList(ArrayList<UserProfileModel> userProfileLoginModelArrayList) {

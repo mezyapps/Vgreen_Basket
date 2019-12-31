@@ -18,13 +18,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.activity.OrderHistoryActivity"></activity>
-        <activity android:name=".view.activity.ProfileActivity" />
-        <activity android:name=".view.activity.FruitActivity" />
-        <activity android:name=".view.activity.VegetableActivity" />
-        <activity android:name=".view.activity.SignUpActivity" />
-        <activity android:name=".view.activity.LoginActivity" />
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="n">
+        <activity android:name=".view.activity.CardActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.OrderHistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.FruitActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.VegetableActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.SignUpActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.LoginActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait">
@@ -37,6 +46,14 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait" />
+
+        <service
+            android:name=".notification.MyFirebaseMessagingService"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

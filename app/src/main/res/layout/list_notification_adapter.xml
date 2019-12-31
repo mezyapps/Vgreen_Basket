@@ -10,14 +10,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/iv_notification_image"
             android:orientation="vertical">
 
@@ -28,9 +29,9 @@
                 android:text="@string/title"
                 android:textAllCaps="true"
                 android:layout_marginStart="5dp"
-                android:textColor="@color/dark_gray"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@color/app_text_color"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
 
 
             <TextView
@@ -38,23 +39,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/description"
-                android:textAllCaps="true"
                 android:textColor="@color/dark_gray"
                 android:textSize="14sp"
-                android:layout_marginStart="5dp"
-                android:textStyle="bold" />
-
-
-
-
+                android:layout_marginStart="5dp"/>
         </LinearLayout>
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_notification_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="5dp"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/app_color"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

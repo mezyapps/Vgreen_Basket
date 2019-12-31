@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseMessaging.getInstance().subscribeToTopic("VgreenClient");
+
+        FirebaseMessaging.getInstance().subscribeToTopic("VgreenCustomer");
 
         find_View_IdS();
         loadFragment(new HomeFragment());
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         iv_basket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new CardFragment());
+               startActivity(new Intent(MainActivity.this,CardActivity.class ));
             }
         });
         iv_notification.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         txt_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("VgreenClient");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("VgreenCustomer");
                 SharedLoginUtils.removeUserSharedUtils(MainActivity.this);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -229,8 +230,8 @@ public class MainActivity extends AppCompatActivity {
     private void shareApplication() {
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Biz Protect Application");
-        String app_url = "https://play.google.com/store/apps/details?id=com.mezyapps.bni_visitor";
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "VGreen Basket");
+        String app_url = "https://play.google.com/store/apps/details?id=com.mezyapps.vgreenbasket";
         shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, app_url);
         startActivity(Intent.createChooser(shareIntent, "Share via"));
     }

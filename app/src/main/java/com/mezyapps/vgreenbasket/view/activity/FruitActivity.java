@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,7 @@ import com.mezyapps.vgreenbasket.model.ProductListModel;
 import com.mezyapps.vgreenbasket.model.SuccessModel;
 import com.mezyapps.vgreenbasket.utils.NetworkUtils;
 import com.mezyapps.vgreenbasket.utils.ShowProgressDialog;
+import com.mezyapps.vgreenbasket.view.fragment.CardFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FruitActivity extends AppCompatActivity {
-    private ImageView  iv_back,iv_close,iv_search,iv_back_search;
+    private ImageView  iv_back,iv_close,iv_search,iv_back_search,iv_cart;
     private RecyclerView recyclerView_Fruit;
     public static ApiInterface apiInterface;
     private ShowProgressDialog showProgressDialog;
@@ -61,6 +63,7 @@ public class FruitActivity extends AppCompatActivity {
         iv_back_search = findViewById(R.id.iv_back_search);
         rr_toolbar_search = findViewById(R.id.rr_toolbar_search);
         recyclerView_Fruit=findViewById(R.id.recyclerView_Fruit);
+        iv_cart=findViewById(R.id.iv_cart);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(FruitActivity.this);
         recyclerView_Fruit.setLayoutManager(linearLayoutManager);
 
@@ -116,6 +119,12 @@ public class FruitActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+        iv_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FruitActivity.this,CardActivity.class));
             }
         });
     }

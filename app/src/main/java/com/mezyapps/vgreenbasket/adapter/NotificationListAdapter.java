@@ -19,13 +19,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class NotificationListAdapter extends RecyclerView.Adapter<NotificationListAdapter.MyViewHolder>{
     private Context mContext;
     private ArrayList<NotificationModel> notificationModelArrayList;
-
-    public NotificationListAdapter(Context mContext, ArrayList<NotificationModel> notificationModelArrayList) {
+    private String folder;
+    public NotificationListAdapter(Context mContext, ArrayList<NotificationModel> notificationModelArrayList,String folder) {
         this.mContext = mContext;
         this.notificationModelArrayList = notificationModelArrayList;
+        this.folder=folder;
     }
 
     @NonNull
@@ -39,7 +42,8 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     public void onBindViewHolder(@NonNull NotificationListAdapter.MyViewHolder holder, int position) {
         final NotificationModel notificationModel=notificationModelArrayList.get(position);
 
-        Picasso.with(mContext).load(R.drawable.logo).into(holder.iv_notification_image);
+        String imagePath = BaseApi.BASE_URL + folder + notificationModel.getImage();
+        Picasso.with(mContext).load(imagePath).into(holder.iv_notification_image);
         holder.textTitle.setText(notificationModel.getTitle());
         holder.textDescription.setText(notificationModel.getDescription());
     }
@@ -51,8 +55,9 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_notification_image;
+        private CircleImageView iv_notification_image;
         private TextView textDescription,textTitle;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textDescription=itemView.findViewById(R.id.textDescription);

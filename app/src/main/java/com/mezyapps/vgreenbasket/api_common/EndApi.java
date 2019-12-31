@@ -6,4 +6,5 @@ public class EndApi extends BaseApi {
     public static final String LOCATION="ws_location";
     public static final String SIGN_UP="ws_sign_in";
     public static final String ROUTE="ws_route";
+    public static final String NOTIFICATION="ws_notification";
 }
