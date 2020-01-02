@@ -21,9 +21,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.mezyapps.vgreenbasket.R;
 import com.mezyapps.vgreenbasket.api_common.BaseApi;
+import com.mezyapps.vgreenbasket.db.AppDatabase;
+import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
 import com.mezyapps.vgreenbasket.model.LocationModel;
 import com.mezyapps.vgreenbasket.model.ProductListModel;
 import com.mezyapps.vgreenbasket.model.ProductUnitModel;
@@ -40,11 +43,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     private ArrayList<ProductUnitModel> productUnitModelArrayList = new ArrayList<>();
     private String folder;
     int SpinnerPosition;
+    final AppDatabase appDatabase;
+
     public ProductListAdapter(Context mContext, ArrayList<ProductListModel> productListDashboardModelArrayList, String folder) {
         this.mContext = mContext;
         this.productListDashboardModelArrayList = productListDashboardModelArrayList;
         this.arrayListFiltered = productListDashboardModelArrayList;
         this.folder = folder;
+        appDatabase= Room.databaseBuilder(mContext,AppDatabase.class,"VgreenDB").allowMainThreadQueries().build();
     }
 
     @NonNull
@@ -153,24 +159,29 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     private void AddItem(int position, ProductListModel productListModel) {
         String productName=productListDashboardModelArrayList.get(position).getProd_name();
+        long product_id=Long.parseLong(productListDashboardModelArrayList.get(position).getProd_id());
         if (productUnitModelArrayList.size() == 1) {
             final ProductUnitModel productUnitModel =productListModel.getProductUnitModelArrayList().get(0);
-            String id=productUnitModel.getId();
-            String unit = productUnitModel.getProd_unit();
+            long  id=Long.parseLong(productUnitModel.getId());
+            long unit =Long.valueOf(productUnitModel.getProd_unit());
             String weight=productUnitModel.getProd_weight();
-            String rate =productUnitModel.getProd_rate();
-            String mrp = productUnitModel.getProd_mrp();
-            Toast.makeText(mContext, productName+" "+unit+" "+weight+" "+rate+" "+mrp, Toast.LENGTH_SHORT).show();
+            long rate =Long.parseLong(productUnitModel.getProd_rate());
+            long mrp =Long.parseLong( productUnitModel.getProd_mrp());
+            long  qty =Long.parseLong( "1");
+            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0,product_id,productName,id,unit,weight,mrp,rate,mrp,rate,qty));
+            Toast.makeText(mContext, String.valueOf(idVal), Toast.LENGTH_SHORT).show();
         }
         else
         {
             final ProductUnitModel productUnitModel =productListModel.getProductUnitModelArrayList().get(SpinnerPosition);
-            String id=productUnitModel.getId();
-            String unit = productUnitModel.getProd_unit();
+            long  id=Long.parseLong(productUnitModel.getId());
+            long unit =Long.valueOf(productUnitModel.getProd_unit());
             String weight=productUnitModel.getProd_weight();
-            String rate =productUnitModel.getProd_rate();
-            String mrp = productUnitModel.getProd_mrp();
-            Toast.makeText(mContext, productName+" "+unit+" "+weight+" "+rate+" "+mrp, Toast.LENGTH_SHORT).show();
+            long rate =Long.parseLong(productUnitModel.getProd_rate());
+            long mrp =Long.parseLong( productUnitModel.getProd_mrp());
+            long  qty =Long.parseLong( "1");
+            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0,product_id,productName,id,unit,weight,mrp,rate,mrp,rate,qty));
+            Toast.makeText(mContext, String.valueOf(idVal), Toast.LENGTH_SHORT).show();
         }
     }
 

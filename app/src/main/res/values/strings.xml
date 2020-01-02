@@ -35,4 +35,6 @@
     <string name="description">Description</string>
     <string name="title">Title</string>
     <string name="update_profile">Update Profile</string>
+    <string name="topic">VgreenCustomer</string>
+    <string name="checkout">Checkout</string>
 </resources>

@@ -2,7 +2,7 @@ package com.mezyapps.vgreenbasket.model;
 
 public class LocationModel {
     private  String id;
-    private String code;
+    private  String code;
     private  String location_name;
 
 

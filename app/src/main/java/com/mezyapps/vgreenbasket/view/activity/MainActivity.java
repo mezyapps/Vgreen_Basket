@@ -43,14 +43,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView text_version_name, text_app_name,textName,textMobileNumber;
     private LinearLayout ll_login,ll_sign_up,ll_login_sign_up;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        FirebaseMessaging.getInstance().subscribeToTopic("VgreenCustomer");
+        FirebaseMessaging.getInstance().subscribeToTopic(getResources().getString(R.string.topic));
 
         find_View_IdS();
         loadFragment(new HomeFragment());
@@ -218,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         txt_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("VgreenCustomer");
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(getResources().getString(R.string.topic));
                 SharedLoginUtils.removeUserSharedUtils(MainActivity.this);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -230,8 +229,8 @@ public class MainActivity extends AppCompatActivity {
     private void shareApplication() {
         Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "VGreen Basket");
-        String app_url = "https://play.google.com/store/apps/details?id=com.mezyapps.vgreenbasket";
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name));
+        String app_url = "https://play.google.com/store/apps/details?id="+getPackageName();
         shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, app_url);
         startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
