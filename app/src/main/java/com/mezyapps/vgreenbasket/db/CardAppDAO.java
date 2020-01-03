@@ -24,4 +24,6 @@ public interface CardAppDAO {
     @Query("select * from ProductTable")
     public List<CardProductModel> getAppProduct();
 
+    @Query("select * from ProductTable where product_id ==:product_id")
+    public CardProductModel getProduct(long product_id);
 }

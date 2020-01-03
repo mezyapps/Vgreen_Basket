@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -41,15 +41,44 @@
                 android:textStyle="bold" />
 
 
-            <ImageView
-                android:id="@+id/iv_basket"
+            <RelativeLayout
+                android:id="@+id/rr_cart"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/iv_notification"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:src="@drawable/ic_shopping_basket" />
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/iv_notification">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/iv_basket"
+                    android:layout_marginStart="-8dp"
+                    android:layout_marginTop="10dp"
+                    android:elevation="1dp"
+                    android:background="@drawable/shape_circle_cart">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="0"
+                        android:maxLength="2"
+                        android:id="@+id/textCardCnt"
+                        android:textColor="@color/white"
+                        android:layout_centerHorizontal="true"/>
+
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/iv_basket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_shopping_basket" />
+
+            </RelativeLayout>
 
 
             <ImageView
@@ -59,7 +88,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:layout_marginStart="5dp"
                 android:src="@drawable/ic_vector_notification" />
 
 
@@ -74,7 +102,7 @@
             <FrameLayout
                 android:id="@+id/framelayout_main"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
 
         </RelativeLayout>

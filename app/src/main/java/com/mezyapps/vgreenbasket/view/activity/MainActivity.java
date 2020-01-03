@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.room.Room;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -25,10 +26,14 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.mezyapps.vgreenbasket.R;
+import com.mezyapps.vgreenbasket.db.AppDatabase;
+import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
 import com.mezyapps.vgreenbasket.utils.SharedLoginUtils;
 import com.mezyapps.vgreenbasket.view.fragment.CardFragment;
 import com.mezyapps.vgreenbasket.view.fragment.HomeFragment;
 import com.mezyapps.vgreenbasket.view.fragment.NotificationListFragment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView iv_drawer, iv_basket, iv_notification;
@@ -40,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     private boolean doubleBackToExitPressedOnce = false;
     private Dialog dialog_logout;
-    private TextView text_version_name, text_app_name,textName,textMobileNumber;
+    private TextView text_version_name, text_app_name,textName,textMobileNumber,textCardCnt;
     private LinearLayout ll_login,ll_sign_up,ll_login_sign_up;
+    private AppDatabase appDatabase;
+    private ArrayList<CardProductModel> cardProductModelArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
         events();
     }
 
+
     private void find_View_IdS() {
+        appDatabase= Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"VgreenDB").allowMainThreadQueries().build();
         iv_drawer = findViewById(R.id.iv_drawer);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
@@ -70,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         textMobileNumber = view.findViewById(R.id.textMobileNumber);
         textName = view.findViewById(R.id.textName);
         ll_login_sign_up = view.findViewById(R.id.ll_login_sign_up);
+        textCardCnt = findViewById(R.id.textCardCnt);
 
         String name=SharedLoginUtils.getUserName(MainActivity.this);
         String mobile_no=SharedLoginUtils.getUserMobile(MainActivity.this);
@@ -79,9 +89,12 @@ public class MainActivity extends AppCompatActivity {
             textMobileNumber.setText(mobile_no);
             ll_login_sign_up.setVisibility(View.GONE);
         }
+
     }
 
     private void events() {
+       int size=cartCount();
+       textCardCnt.setText(String.valueOf(size));
         iv_drawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +147,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
             }
         });
+    }
+
+    public int cartCount() {
+        cardProductModelArrayList.clear();
+        cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
+        int size=cardProductModelArrayList.size();
+        return size;
     }
 
 
@@ -233,5 +253,12 @@ public class MainActivity extends AppCompatActivity {
         String app_url = "https://play.google.com/store/apps/details?id="+getPackageName();
         shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, app_url);
         startActivity(Intent.createChooser(shareIntent, "Share via"));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        int size=cartCount();
+        textCardCnt.setText(String.valueOf(size));
     }
 }

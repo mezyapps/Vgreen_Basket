@@ -3,6 +3,7 @@ package com.mezyapps.vgreenbasket.view.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -20,6 +22,8 @@ import com.mezyapps.vgreenbasket.R;
 import com.mezyapps.vgreenbasket.adapter.ProductListAdapter;
 import com.mezyapps.vgreenbasket.api_common.ApiClient;
 import com.mezyapps.vgreenbasket.api_common.ApiInterface;
+import com.mezyapps.vgreenbasket.db.AppDatabase;
+import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
 import com.mezyapps.vgreenbasket.model.ProductListModel;
 import com.mezyapps.vgreenbasket.model.SuccessModel;
 import com.mezyapps.vgreenbasket.utils.NetworkUtils;
@@ -35,7 +39,7 @@ import retrofit2.Response;
 
 public class VegetableActivity extends AppCompatActivity {
 
-    private ImageView iv_back,iv_close,iv_search,iv_back_search,iv_cart;
+    private ImageView iv_back,iv_close,iv_search,iv_back_search,iv_basket;
     private RecyclerView recyclerView_Vegetable;
     public static ApiInterface apiInterface;
     private ShowProgressDialog showProgressDialog;
@@ -43,6 +47,7 @@ public class VegetableActivity extends AppCompatActivity {
     private ProductListAdapter productListAdapter;
     private RelativeLayout rr_toolbar,rr_toolbar_search;
     private EditText edit_search;
+    private TextView textCardCnt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +67,9 @@ public class VegetableActivity extends AppCompatActivity {
         edit_search=findViewById(R.id.edit_search);
         rr_toolbar = findViewById(R.id.rr_toolbar);
         iv_back_search = findViewById(R.id.iv_back_search);
-        iv_cart = findViewById(R.id.iv_cart);
+        iv_basket = findViewById(R.id.iv_basket);
         rr_toolbar_search = findViewById(R.id.rr_toolbar_search);
+        textCardCnt = findViewById(R.id.textCardCnt);
         recyclerView_Vegetable=findViewById(R.id.recyclerView_Vegetable);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(VegetableActivity.this);
         recyclerView_Vegetable.setLayoutManager(linearLayoutManager);
@@ -75,6 +81,9 @@ public class VegetableActivity extends AppCompatActivity {
         }
     }
     private void events() {
+        int size=cartCount();
+        textCardCnt.setText(String.valueOf(size));
+
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +129,7 @@ public class VegetableActivity extends AppCompatActivity {
 
             }
         });
-        iv_cart.setOnClickListener(new View.OnClickListener() {
+        iv_basket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(VegetableActivity.this,CardActivity.class));
@@ -183,5 +192,23 @@ public class VegetableActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        callProductList();
+        int size=cartCount();
+        textCardCnt.setText(String.valueOf(size));
+    }
+
+    public int cartCount() {
+        ArrayList<CardProductModel> cardProductModelArrayList=new ArrayList<>();
+        AppDatabase appDatabase;
+        appDatabase= Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"VgreenDB").allowMainThreadQueries().build();
+        cardProductModelArrayList.clear();
+        cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
+        int size=cardProductModelArrayList.size();
+        return size;
     }
 }

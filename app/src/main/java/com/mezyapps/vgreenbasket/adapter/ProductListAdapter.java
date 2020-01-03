@@ -50,7 +50,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         this.productListDashboardModelArrayList = productListDashboardModelArrayList;
         this.arrayListFiltered = productListDashboardModelArrayList;
         this.folder = folder;
-        appDatabase= Room.databaseBuilder(mContext,AppDatabase.class,"VgreenDB").allowMainThreadQueries().build();
+        appDatabase = Room.databaseBuilder(mContext, AppDatabase.class, "VgreenDB").allowMainThreadQueries().build();
     }
 
     @NonNull
@@ -63,10 +63,18 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         final ProductListModel productListModel = productListDashboardModelArrayList.get(position);
+
+        CardProductModel cardProductModel = appDatabase.getProductDAO().getProduct(Long.parseLong(productListModel.getProd_id()));
+
+        if (cardProductModel != null) {
+            holder.ll_product_qty.setVisibility(View.VISIBLE);
+            holder.ll_add_product.setVisibility(View.GONE);
+            holder.textQty.setText(String.valueOf(cardProductModel.getQty()));
+        }
+
         String imagePath = BaseApi.BASE_URL + folder + productListModel.getProd_image();
         Picasso.with(mContext).load(imagePath).into(holder.iv_product_image);
         holder.textProductName.setText(productListModel.getProd_name());
-
 
         productUnitModelArrayList = productListModel.getProductUnitModelArrayList();
 
@@ -101,8 +109,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 try {
-                    SpinnerPosition=position;
-                    final ProductUnitModel productUnitmodel=productListModel.getProductUnitModelArrayList().get(position);
+                    SpinnerPosition = position;
+                    final ProductUnitModel productUnitmodel = productListModel.getProductUnitModelArrayList().get(position);
                     int product_id = Integer.parseInt(productUnitmodel.getId());
                     String unit = productUnitmodel.getProd_unit() + " " + productUnitmodel.getProd_weight();
                     String rate = "Rs " + productUnitmodel.getProd_rate();
@@ -122,66 +130,45 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
             }
         });
-
-
-      /*  holder.textUnitName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog = new Dialog(mContext);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_item_list);
-                TextView textProductName=dialog.findViewById(R.id.textProductName);
-                RecyclerView recyclerView_Item=dialog.findViewById(R.id.recyclerView_Item);
-
-                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(mContext);
-                recyclerView_Item.setLayoutManager(linearLayoutManager);
-
-                textProductName.setText(productListModel.getProd_name());
-                dialog.show();
-
-                ProductItemAdapter productItemAdapter=new ProductItemAdapter(mContext,productUnitModelArrayList);
-                recyclerView_Item.setAdapter(productItemAdapter);
-                productItemAdapter.notifyDataSetChanged();
-
-                Window window = dialog.getWindow();
-                window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                dialog.setCancelable(true);
-            }
-        });*/
         holder.ll_add_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               AddItem(position,productListModel);
+                AddItem(position, productListModel);
             }
         });
     }
 
     private void AddItem(int position, ProductListModel productListModel) {
-        String productName=productListDashboardModelArrayList.get(position).getProd_name();
-        long product_id=Long.parseLong(productListDashboardModelArrayList.get(position).getProd_id());
+        String productName = productListDashboardModelArrayList.get(position).getProd_name();
+        long product_id = Long.parseLong(productListDashboardModelArrayList.get(position).getProd_id());
         if (productUnitModelArrayList.size() == 1) {
-            final ProductUnitModel productUnitModel =productListModel.getProductUnitModelArrayList().get(0);
-            long  id=Long.parseLong(productUnitModel.getId());
-            long unit =Long.valueOf(productUnitModel.getProd_unit());
-            String weight=productUnitModel.getProd_weight();
-            long rate =Long.parseLong(productUnitModel.getProd_rate());
-            long mrp =Long.parseLong( productUnitModel.getProd_mrp());
-            long  qty =Long.parseLong( "1");
-            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0,product_id,productName,id,unit,weight,mrp,rate,mrp,rate,qty));
-            Toast.makeText(mContext, String.valueOf(idVal), Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            final ProductUnitModel productUnitModel =productListModel.getProductUnitModelArrayList().get(SpinnerPosition);
-            long  id=Long.parseLong(productUnitModel.getId());
-            long unit =Long.valueOf(productUnitModel.getProd_unit());
-            String weight=productUnitModel.getProd_weight();
-            long rate =Long.parseLong(productUnitModel.getProd_rate());
-            long mrp =Long.parseLong( productUnitModel.getProd_mrp());
-            long  qty =Long.parseLong( "1");
-            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0,product_id,productName,id,unit,weight,mrp,rate,mrp,rate,qty));
-            Toast.makeText(mContext, String.valueOf(idVal), Toast.LENGTH_SHORT).show();
+            final ProductUnitModel productUnitModel = productListModel.getProductUnitModelArrayList().get(0);
+            long id = Long.parseLong(productUnitModel.getId());
+            long unit = Long.valueOf(productUnitModel.getProd_unit());
+            String weight = productUnitModel.getProd_weight();
+            long rate = Long.parseLong(productUnitModel.getProd_rate());
+            long mrp = Long.parseLong(productUnitModel.getProd_mrp());
+            long qty = Long.parseLong("1");
+            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, mrp, rate, mrp, rate, qty));
+            if (idVal != 0)
+                Toast.makeText(mContext, productName + "Added  Into Card Successfully", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(mContext, productName + "Not Added", Toast.LENGTH_SHORT).show();
+            notifyDataSetChanged();
+        } else {
+            final ProductUnitModel productUnitModel = productListModel.getProductUnitModelArrayList().get(SpinnerPosition);
+            long id = Long.parseLong(productUnitModel.getId());
+            long unit = Long.valueOf(productUnitModel.getProd_unit());
+            String weight = productUnitModel.getProd_weight();
+            long rate = Long.parseLong(productUnitModel.getProd_rate());
+            long mrp = Long.parseLong(productUnitModel.getProd_mrp());
+            long qty = Long.parseLong("1");
+            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, mrp, rate, mrp, rate, qty));
+            if (idVal != 0)
+                Toast.makeText(mContext, productName + "  Added  Into Card", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(mContext, productName + "  Not Added", Toast.LENGTH_SHORT).show();
+            notifyDataSetChanged();
         }
     }
 
@@ -192,8 +179,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_product_image;
-        private TextView textProductName, textUnitName, textPrice, textMrp;
-        private LinearLayout ll_unit_one, ll_spinner, ll_add_product;
+        private TextView textProductName, textUnitName, textPrice, textMrp, textQty;
+        private LinearLayout ll_unit_one, ll_spinner, ll_add_product, ll_product_qty;
         private Spinner spinnerUnit;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -207,6 +194,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             ll_spinner = itemView.findViewById(R.id.ll_spinner);
             spinnerUnit = itemView.findViewById(R.id.spinnerUnit);
             ll_add_product = itemView.findViewById(R.id.ll_add_product);
+            ll_product_qty = itemView.findViewById(R.id.ll_product_qty);
+            textQty = itemView.findViewById(R.id.textQty);
         }
     }
 

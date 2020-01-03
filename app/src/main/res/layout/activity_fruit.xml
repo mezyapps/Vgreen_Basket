@@ -31,14 +31,44 @@
             android:textSize="18sp"
             android:layout_toEndOf="@+id/iv_back"/>
 
-        <ImageView
+        <RelativeLayout
+            android:id="@+id/rr_cart"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="5dp"
-            android:id="@+id/iv_cart"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/iv_search"
-            android:src="@drawable/ic_shopping_basket"/>
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/iv_search">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/iv_basket"
+                android:layout_marginStart="-8dp"
+                android:layout_marginTop="10dp"
+                android:elevation="1dp"
+                android:background="@drawable/shape_circle_cart">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="0"
+                    android:maxLength="2"
+                    android:id="@+id/textCardCnt"
+                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"/>
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_basket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_shopping_basket" />
+
+        </RelativeLayout>
 
 
         <ImageView
