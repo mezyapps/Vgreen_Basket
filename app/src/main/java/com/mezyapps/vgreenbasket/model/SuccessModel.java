@@ -28,6 +28,7 @@ public class SuccessModel {
     @SerializedName("notification_list")
     private ArrayList<NotificationModel> notificationModelArrayList;
 
+
     public ArrayList<UserProfileModel> getUserProfileLoginModelArrayList() {
         return userProfileLoginModelArrayList;
     }

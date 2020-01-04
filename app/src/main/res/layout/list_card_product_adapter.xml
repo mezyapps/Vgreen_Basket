@@ -95,20 +95,58 @@
                 android:layout_marginEnd="10dp"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_delete"
+                    android:src="@drawable/ic_vector_delete"/>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:id="@+id/ll_add_product"
-                    android:background="@drawable/shape_add_item">
+                    android:id="@+id/ll_product_qty"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:id="@+id/ll_remove_qty"
+                        android:background="@drawable/shape_update_btn">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_vector_remove"/>
+
+                    </LinearLayout>
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Add"
-                        android:textColor="@color/white"
+                        android:text="0"
+                        android:id="@+id/textQty"
+                        android:textColor="@color/red"
                         android:textSize="14sp" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:id="@+id/ll_add_qty"
+                        android:background="@drawable/shape_update_btn">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_vector_plus"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

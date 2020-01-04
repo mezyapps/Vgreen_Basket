@@ -20,6 +20,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ import com.mezyapps.vgreenbasket.view.fragment.NotificationListFragment;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView iv_drawer, iv_basket, iv_notification;
+    private ImageView iv_drawer, iv_notification;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private FrameLayout frameLayout_main;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout ll_login,ll_sign_up,ll_login_sign_up;
     private AppDatabase appDatabase;
     private ArrayList<CardProductModel> cardProductModelArrayList = new ArrayList<>();
+    private RelativeLayout rr_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         text_version_name = findViewById(R.id.text_version_name);
         text_app_name = findViewById(R.id.text_app_name);
-        iv_basket = findViewById(R.id.iv_basket);
+        rr_cart = findViewById(R.id.rr_cart);
         iv_notification = findViewById(R.id.iv_notification);
         View view=navigationView.getHeaderView(0);
         ll_login = view.findViewById(R.id.ll_login);
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        iv_basket.setOnClickListener(new View.OnClickListener() {
+        rr_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                startActivity(new Intent(MainActivity.this,CardActivity.class ));

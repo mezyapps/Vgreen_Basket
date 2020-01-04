@@ -48,6 +48,7 @@ public class VegetableActivity extends AppCompatActivity {
     private RelativeLayout rr_toolbar,rr_toolbar_search;
     private EditText edit_search;
     private TextView textCardCnt;
+    private RelativeLayout rr_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class VegetableActivity extends AppCompatActivity {
         iv_basket = findViewById(R.id.iv_basket);
         rr_toolbar_search = findViewById(R.id.rr_toolbar_search);
         textCardCnt = findViewById(R.id.textCardCnt);
+        rr_cart = findViewById(R.id.rr_cart);
         recyclerView_Vegetable=findViewById(R.id.recyclerView_Vegetable);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(VegetableActivity.this);
         recyclerView_Vegetable.setLayoutManager(linearLayoutManager);
@@ -129,7 +131,7 @@ public class VegetableActivity extends AppCompatActivity {
 
             }
         });
-        iv_basket.setOnClickListener(new View.OnClickListener() {
+        rr_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(VegetableActivity.this,CardActivity.class));

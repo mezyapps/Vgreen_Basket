@@ -41,10 +41,13 @@ public class CardProductModel {
     @ColumnInfo(name = "qty")
     private long qty;
 
+    @ColumnInfo(name = "imagepath")
+    private String imagepath;
+
     public CardProductModel() {
     }
 
-    public CardProductModel(long id,long product_id, String product_name, long unit_id,long unit, String weight, long mrp, long mrp_total, long price, long price_total, long qty) {
+    public CardProductModel(long id,long product_id, String product_name, long unit_id,long unit, String weight, long mrp, long mrp_total, long price, long price_total, long qty,String imagepath) {
         this.id=id;
         this.product_id = product_id;
         this.product_name = product_name;
@@ -56,6 +59,7 @@ public class CardProductModel {
         this.price = price;
         this.price_total = price_total;
         this.qty = qty;
+        this.imagepath = imagepath;
     }
 
     public long getProduct_id() {
@@ -136,6 +140,14 @@ public class CardProductModel {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
     }
 
     public long getUnit() {
