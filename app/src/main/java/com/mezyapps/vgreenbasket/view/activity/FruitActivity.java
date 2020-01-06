@@ -27,6 +27,7 @@ import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
 import com.mezyapps.vgreenbasket.model.ProductListModel;
 import com.mezyapps.vgreenbasket.model.SuccessModel;
 import com.mezyapps.vgreenbasket.utils.NetworkUtils;
+import com.mezyapps.vgreenbasket.utils.ReferenceCardUiInterface;
 import com.mezyapps.vgreenbasket.utils.ShowProgressDialog;
 import com.mezyapps.vgreenbasket.view.fragment.CardFragment;
 
@@ -37,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FruitActivity extends AppCompatActivity {
+public class FruitActivity extends AppCompatActivity  implements ReferenceCardUiInterface {
     private ImageView  iv_back,iv_close,iv_search,iv_back_search,iv_basket;
     private RecyclerView recyclerView_Fruit;
     public static ApiInterface apiInterface;
@@ -164,7 +165,7 @@ public class FruitActivity extends AppCompatActivity {
                                 productListModelArrayList=successModule.getProductListModelArrayList();
                                 if(productListModelArrayList.size()!=0) {
                                     Collections.reverse(productListModelArrayList);
-                                    productListAdapter=new ProductListAdapter(FruitActivity.this,productListModelArrayList,folder);
+                                    productListAdapter=new ProductListAdapter(FruitActivity.this,productListModelArrayList,folder,FruitActivity.this);
                                     recyclerView_Fruit.setAdapter(productListAdapter);
                                     productListAdapter.notifyDataSetChanged();
                                 }
@@ -213,5 +214,11 @@ public class FruitActivity extends AppCompatActivity {
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
         int size=cardProductModelArrayList.size();
         return size;
+    }
+
+    @Override
+    public void reference() {
+        int size=cartCount();
+        textCardCnt.setText(String.valueOf(size));
     }
 }

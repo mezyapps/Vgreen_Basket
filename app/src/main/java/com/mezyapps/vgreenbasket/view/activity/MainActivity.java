@@ -82,19 +82,10 @@ public class MainActivity extends AppCompatActivity {
         textName = view.findViewById(R.id.textName);
         ll_login_sign_up = view.findViewById(R.id.ll_login_sign_up);
         textCardCnt = findViewById(R.id.textCardCnt);
-
-        String name=SharedLoginUtils.getUserName(MainActivity.this);
-        String mobile_no=SharedLoginUtils.getUserMobile(MainActivity.this);
-
-        if(!name.equalsIgnoreCase("") && !mobile_no.equalsIgnoreCase("")) {
-            textName.setText(name);
-            textMobileNumber.setText(mobile_no);
-            ll_login_sign_up.setVisibility(View.GONE);
-        }
-
     }
 
     private void events() {
+        displayUserInfo();
        int size=cartCount();
        textCardCnt.setText(String.valueOf(size));
         iv_drawer.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +140,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
             }
         });
+    }
+
+    private void displayUserInfo() {
+        String name=SharedLoginUtils.getUserName(MainActivity.this);
+        String mobile_no=SharedLoginUtils.getUserMobile(MainActivity.this);
+
+        if(!name.equalsIgnoreCase("") && !mobile_no.equalsIgnoreCase("")) {
+            textName.setText(name);
+            textMobileNumber.setText(mobile_no);
+            ll_login_sign_up.setVisibility(View.GONE);
+        }
     }
 
     public int cartCount() {
@@ -262,5 +264,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         int size=cartCount();
         textCardCnt.setText(String.valueOf(size));
+        displayUserInfo();
     }
 }

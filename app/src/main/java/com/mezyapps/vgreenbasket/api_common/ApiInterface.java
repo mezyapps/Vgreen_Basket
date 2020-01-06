@@ -40,4 +40,14 @@ public interface ApiInterface {
     @POST(EndApi.NOTIFICATION)
     Call<SuccessModel> notificationList();
 
+    @POST(EndApi.UPDATE_USER_PROFILE)
+    @FormUrlEncoded
+    Call<SuccessModel> updateUserProfile(
+                              @Field("user_id") String user_id,
+                              @Field("name") String name,
+                              @Field("mobile_no") String mobile_no,
+                              @Field("address") String address,
+                              @Field("location_id") String location_id,
+                              @Field("route_id") String route_id);
+
 }

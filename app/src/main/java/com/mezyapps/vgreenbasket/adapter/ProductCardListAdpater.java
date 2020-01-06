@@ -18,6 +18,7 @@ import com.mezyapps.vgreenbasket.R;
 import com.mezyapps.vgreenbasket.api_common.BaseApi;
 import com.mezyapps.vgreenbasket.db.AppDatabase;
 import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
+import com.mezyapps.vgreenbasket.utils.ReferenceCardUiInterface;
 import com.squareup.picasso.Picasso;
 
 
@@ -28,11 +29,13 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
     private Context mContext;
     private ArrayList<CardProductModel> cardProductModelArrayList;
     final AppDatabase appDatabase;
+    private ReferenceCardUiInterface referenceCardUiInterface;
 
-    public ProductCardListAdpater(Context mContext, ArrayList<CardProductModel> cardProductModelArrayList) {
+    public ProductCardListAdpater(Context mContext, ArrayList<CardProductModel> cardProductModelArrayList,ReferenceCardUiInterface referenceCardUiInterface) {
         this.mContext = mContext;
         this.cardProductModelArrayList = cardProductModelArrayList;
         appDatabase = Room.databaseBuilder(mContext, AppDatabase.class, "VgreenDB").allowMainThreadQueries().build();
+        this.referenceCardUiInterface=referenceCardUiInterface;
     }
 
     @NonNull
@@ -79,9 +82,10 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
                 cardProductModel.setQty(qtyVal);
 
                 long idVal = appDatabase.getProductDAO().getProductDataUpdate(qtyVal, product_id, totalRate, mrpTotal);
-                Toast.makeText(mContext, String.valueOf(idVal), Toast.LENGTH_SHORT).show();
+               /* Toast.makeText(mContext, String.valueOf(idVal), Toast.LENGTH_SHORT).show();*/
                 cardProductModelArrayList.set(position, cardProductModel);
                 notifyDataSetChanged();
+                referenceCardUiInterface.reference();
             }
         });
         holder.ll_remove_qty.setOnClickListener(new View.OnClickListener() {
@@ -104,9 +108,10 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
                     cardProductModel.setQty(qtyVal);
 
                     long idVal = appDatabase.getProductDAO().getProductDataUpdate(qtyVal, product_id, totalRate, mrpTotal);
-                    Toast.makeText(mContext, String.valueOf(idVal), Toast.LENGTH_SHORT).show();
+                  /*  Toast.makeText(mContext, String.valueOf(idVal), Toast.LENGTH_SHORT).show();*/
                     cardProductModelArrayList.set(position, cardProductModel);
                     notifyDataSetChanged();
+                    referenceCardUiInterface.reference();
                 }
             }
         });
@@ -116,6 +121,7 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
                 cardProductModelArrayList.remove(position);
                 appDatabase.getProductDAO().deleteProduct(cardProductModel);
                 notifyDataSetChanged();
+                referenceCardUiInterface.reference();
             }
         });
     }

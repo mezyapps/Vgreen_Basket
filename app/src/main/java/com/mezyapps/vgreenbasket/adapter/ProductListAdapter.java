@@ -31,6 +31,7 @@ import com.mezyapps.vgreenbasket.model.LocationModel;
 import com.mezyapps.vgreenbasket.model.ProductListModel;
 import com.mezyapps.vgreenbasket.model.ProductUnitModel;
 import com.mezyapps.vgreenbasket.utils.NetworkUtils;
+import com.mezyapps.vgreenbasket.utils.ReferenceCardUiInterface;
 import com.mezyapps.vgreenbasket.view.activity.SignUpActivity;
 import com.squareup.picasso.Picasso;
 
@@ -44,13 +45,15 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     private String folder;
     int SpinnerPosition;
     final AppDatabase appDatabase;
+    private ReferenceCardUiInterface referenceCardUiInterface;
 
-    public ProductListAdapter(Context mContext, ArrayList<ProductListModel> productListDashboardModelArrayList, String folder) {
+    public ProductListAdapter(Context mContext, ArrayList<ProductListModel> productListDashboardModelArrayList, String folder,ReferenceCardUiInterface referenceCardUiInterface) {
         this.mContext = mContext;
         this.productListDashboardModelArrayList = productListDashboardModelArrayList;
         this.arrayListFiltered = productListDashboardModelArrayList;
         this.folder = folder;
         appDatabase = Room.databaseBuilder(mContext, AppDatabase.class, "VgreenDB").allowMainThreadQueries().build();
+        this.referenceCardUiInterface=referenceCardUiInterface;
     }
 
     @NonNull
@@ -175,7 +178,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             long rate = Long.parseLong(productUnitModel.getProd_rate());
             long mrp = Long.parseLong(productUnitModel.getProd_mrp());
             long qty = Long.parseLong("1");
-            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, mrp, rate, mrp, rate, qty,folder + productListModel.getProd_image()));
+            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, mrp, mrp,rate, rate, qty,folder + productListModel.getProd_image()));
             if (idVal != 0)
                 Toast.makeText(mContext, productName + "Added  Into Card Successfully", Toast.LENGTH_SHORT).show();
             else
@@ -189,13 +192,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             long rate = Long.parseLong(productUnitModel.getProd_rate());
             long mrp = Long.parseLong(productUnitModel.getProd_mrp());
             long qty = Long.parseLong("1");
-            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, mrp, rate, mrp, rate, qty,folder + productListModel.getProd_image()));
+            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, mrp, mrp,rate, rate, qty,folder + productListModel.getProd_image()));
             if (idVal != 0)
                 Toast.makeText(mContext, productName + "  Added  Into Card", Toast.LENGTH_SHORT).show();
             else
                 Toast.makeText(mContext, productName + "  Not Added", Toast.LENGTH_SHORT).show();
             notifyDataSetChanged();
         }
+        referenceCardUiInterface.reference();
     }
 
     @Override

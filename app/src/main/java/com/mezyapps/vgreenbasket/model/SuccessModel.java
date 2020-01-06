@@ -22,12 +22,24 @@ public class SuccessModel {
     @SerializedName("login")
     private ArrayList<UserProfileModel> userProfileLoginModelArrayList;
 
+
+    @SerializedName("user_profile")
+    private ArrayList<UserProfileModel> userProfileUpdateLoginModelArrayList;
+
     @SerializedName("product_list")
     private ArrayList<ProductListModel> productListModelArrayList;
 
     @SerializedName("notification_list")
     private ArrayList<NotificationModel> notificationModelArrayList;
 
+
+    public ArrayList<UserProfileModel> getUserProfileUpdateLoginModelArrayList() {
+        return userProfileUpdateLoginModelArrayList;
+    }
+
+    public void setUserProfileUpdateLoginModelArrayList(ArrayList<UserProfileModel> userProfileUpdateLoginModelArrayList) {
+        this.userProfileUpdateLoginModelArrayList = userProfileUpdateLoginModelArrayList;
+    }
 
     public ArrayList<UserProfileModel> getUserProfileLoginModelArrayList() {
         return userProfileLoginModelArrayList;

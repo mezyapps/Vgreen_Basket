@@ -7,6 +7,7 @@
     <color name="black">#000000</color>
     <color name="gray">#AFADAD</color>
     <color name="dark_gray">#333333</color>
+    <color name="card_bottom">#6F6868</color>
     <color name="light_gray">#D8D8D8</color>
 
     <color name="app_color">#0F970F</color>

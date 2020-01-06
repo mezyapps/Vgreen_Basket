@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true"
-            android:background="@color/light_gray"
+            android:background="@color/card_bottom"
             android:orientation="horizontal"
             android:id="@+id/ll_cart_bottom"
             android:weightSum="3">
@@ -69,12 +69,20 @@
                 <TextView
                     android:id="@+id/textTotalAmt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:id="@+id/textTotalSavedAmt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/app_color"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    android:textSize="16sp"/>
 
 
             </LinearLayout>
@@ -94,6 +102,7 @@
                     android:text="@string/checkout"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:background="@drawable/shape_chackout"/>
 
