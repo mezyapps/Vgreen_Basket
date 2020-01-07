@@ -20,20 +20,28 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".view.activity.CardActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.OrderHistoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ProfileActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.FruitActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.VegetableActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.SignUpActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.LoginActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.PaymentDetialsActivity"></activity>
+        <activity
+            android:name=".view.activity.CardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.OrderHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.FruitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.VegetableActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait">

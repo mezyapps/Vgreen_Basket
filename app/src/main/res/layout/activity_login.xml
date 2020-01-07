@@ -91,14 +91,13 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/dark_gray"
-            android:textStyle="bold"
             android:text="@string/don_t_have_an_account" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:id="@+id/textSignUp"
             android:textColor="@color/dark_gray"
             android:textStyle="bold"

@@ -30,7 +30,6 @@ import com.mezyapps.vgreenbasket.R;
 import com.mezyapps.vgreenbasket.db.AppDatabase;
 import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
 import com.mezyapps.vgreenbasket.utils.SharedLoginUtils;
-import com.mezyapps.vgreenbasket.view.fragment.CardFragment;
 import com.mezyapps.vgreenbasket.view.fragment.HomeFragment;
 import com.mezyapps.vgreenbasket.view.fragment.NotificationListFragment;
 

@@ -94,15 +94,15 @@
                 android:layout_weight="2">
 
 
-                <TextView
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:text="@string/checkout"
                     android:textSize="18sp"
+                    android:id="@+id/btn_checkout"
                     android:textStyle="bold"
-                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:background="@drawable/shape_chackout"/>
 
