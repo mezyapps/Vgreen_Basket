@@ -20,7 +20,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".view.activity.PaymentDetialsActivity"></activity>
+
+        <activity android:name=".view.activity.PaymentDetialsActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".view.activity.CardActivity"
             android:screenOrientation="portrait" />
