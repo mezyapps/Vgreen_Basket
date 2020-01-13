@@ -6,28 +6,49 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mezyapps.vgreenbasket.R;
+import com.mezyapps.vgreenbasket.adapter.ProductListAdapter;
+import com.mezyapps.vgreenbasket.api_common.ApiClient;
+import com.mezyapps.vgreenbasket.api_common.ApiInterface;
 import com.mezyapps.vgreenbasket.db.AppDatabase;
 import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
+import com.mezyapps.vgreenbasket.model.SuccessModel;
+import com.mezyapps.vgreenbasket.utils.NetworkUtils;
 import com.mezyapps.vgreenbasket.utils.SharedLoginUtils;
+import com.mezyapps.vgreenbasket.utils.ShowProgressDialog;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PaymentDetialsActivity extends AppCompatActivity {
     private ImageView iv_back;
     private ArrayList<CardProductModel> cardProductModelArrayList = new ArrayList<>();
     private AppDatabase appDatabase;
     private TextView textTotalAmt, textTotalSavedAmt, textName, textMobileNumber, textTotalMrp;
-    private String name, mobile_no, user_id;
+    private String name, mobile_no, user_id,payment_type;
     private LinearLayout ll_login_sign_up, ll_user_details, ll_login, ll_sign_up;
     private Button btn_place_order;
+    private RadioButton radioCashOnDelivery;
+    private ShowProgressDialog showProgressDialog;
+    public static ApiInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +60,8 @@ public class PaymentDetialsActivity extends AppCompatActivity {
     }
 
     private void find_View_IDs() {
+        showProgressDialog=new ShowProgressDialog(PaymentDetialsActivity.this);
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
         appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "VgreenDB").allowMainThreadQueries().build();
         iv_back = findViewById(R.id.iv_back);
         textTotalAmt = findViewById(R.id.textTotalAmt);
@@ -51,6 +74,7 @@ public class PaymentDetialsActivity extends AppCompatActivity {
         ll_sign_up = findViewById(R.id.ll_sign_up);
         btn_place_order = findViewById(R.id.btn_place_order);
         textTotalMrp = findViewById(R.id.textTotalMrp);
+        radioCashOnDelivery = findViewById(R.id.radioCashOnDelivery);
 
         cardProductModelArrayList.clear();
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
@@ -71,6 +95,7 @@ public class PaymentDetialsActivity extends AppCompatActivity {
         textTotalSavedAmt.setText(total_save);
         textTotalAmt.setText(rate);
 
+        payment_type=radioCashOnDelivery.getText().toString();
 
         name = SharedLoginUtils.getUserName(PaymentDetialsActivity.this);
         mobile_no = SharedLoginUtils.getUserMobile(PaymentDetialsActivity.this);
@@ -109,8 +134,125 @@ public class PaymentDetialsActivity extends AppCompatActivity {
         btn_place_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PaymentDetialsActivity.this, "Wait", Toast.LENGTH_SHORT).show();
+                if(validation())
+                {
+                    if (NetworkUtils.isNetworkAvailable(PaymentDetialsActivity.this)) {
+                        callPlaceOrder();
+                    } else {
+                        NetworkUtils.isNetworkNotAvailable(PaymentDetialsActivity.this);
+                    }
+
+                }
             }
         });
+    }
+
+    private void callPlaceOrder() {
+        showProgressDialog.showDialog();
+        JSONArray jsonArrayProductID=getProductID();
+        JSONArray jsonArrayUnitID=getProductUnitID();
+        JSONArray jsonArrayWeight=getProductWeightID();
+        JSONArray jsonArrayTotalMRP=getProductTotalMRP();
+        JSONArray jsonArrayTotalPrice=getProductTotalPrice();
+        JSONArray total_qty=getProductTotalQty();
+
+        Call<SuccessModel> call = apiInterface.callPlaceOrder(user_id,jsonArrayProductID,jsonArrayUnitID,jsonArrayWeight,jsonArrayTotalMRP,jsonArrayTotalPrice,total_qty,payment_type);
+        call.enqueue(new Callback<SuccessModel>() {
+            @Override
+            public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
+                showProgressDialog.dismissDialog();
+                String str_response = new Gson().toJson(response.body());
+                Log.d("Response >>", str_response);
+
+                try {
+                    if (response.isSuccessful()) {
+                        SuccessModel successModule = response.body();
+                        String message = null, code = null,folder;
+                        if (successModule != null) {
+                            code = successModule.getCode();
+                            folder = successModule.getFolder();
+                            if (code.equalsIgnoreCase("1")) {
+
+
+                            } else {
+
+                            }
+                        } else {
+                            Toast.makeText(PaymentDetialsActivity.this, "Response Null", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                     showProgressDialog.dismissDialog();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<SuccessModel> call, Throwable t) {
+                showProgressDialog.dismissDialog();
+            }
+        });
+    }
+
+    private boolean validation() {
+        if(user_id==null || user_id.equalsIgnoreCase(""))
+        {
+            Toast.makeText(PaymentDetialsActivity.this, "Please Login Your Account", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+    private JSONArray getProductID() {
+            List<String> ppList = new ArrayList<>();
+            for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+                ppList.add(String.valueOf(cardProductModelArrayList.get(i).getProduct_id()));
+            }
+            JSONArray ppJsonArray = new JSONArray(ppList);
+            return ppJsonArray;
+    }
+    private JSONArray getProductUnitID() {
+        List<String> ppList = new ArrayList<>();
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            ppList.add(String.valueOf(cardProductModelArrayList.get(i).getUnit()));
+        }
+        JSONArray ppJsonArray = new JSONArray(ppList);
+        return ppJsonArray;
+    }
+    private JSONArray getProductWeightID() {
+        List<String> ppList = new ArrayList<>();
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            ppList.add(String.valueOf(cardProductModelArrayList.get(i).getWeight_id()));
+        }
+        JSONArray ppJsonArray = new JSONArray(ppList);
+        return ppJsonArray;
+    }
+
+    private JSONArray getProductTotalMRP() {
+        List<String> ppList = new ArrayList<>();
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            ppList.add(String.valueOf(cardProductModelArrayList.get(i).getMrp_total()));
+        }
+        JSONArray ppJsonArray = new JSONArray(ppList);
+        return ppJsonArray;
+    }
+    private JSONArray getProductTotalPrice() {
+        List<String> ppList = new ArrayList<>();
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            ppList.add(String.valueOf(cardProductModelArrayList.get(i).getPrice_total()));
+        }
+        JSONArray ppJsonArray = new JSONArray(ppList);
+        return ppJsonArray;
+    }
+
+    private JSONArray getProductTotalQty() {
+        List<String> ppList = new ArrayList<>();
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            ppList.add(String.valueOf(cardProductModelArrayList.get(i).getQty()));
+        }
+        JSONArray ppJsonArray = new JSONArray(ppList);
+        return ppJsonArray;
     }
 }

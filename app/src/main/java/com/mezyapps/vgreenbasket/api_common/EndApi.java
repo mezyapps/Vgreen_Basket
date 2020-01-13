@@ -8,4 +8,5 @@ public class EndApi extends BaseApi {
     public static final String ROUTE="ws_route";
     public static final String NOTIFICATION="ws_notification";
     public static final String UPDATE_USER_PROFILE="ws_user_profile";
+    public static final String PLACE_ORDER="ws_place_order";
 }

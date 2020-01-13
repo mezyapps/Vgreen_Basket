@@ -53,7 +53,7 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
         Picasso.with(mContext).load(imagePath).into(holder.iv_product_image);
 
         final long qty = cardProductModel.getQty();
-        String unit = cardProductModel.getUnit() + " " + cardProductModel.getWeight() + " - ";
+        String unit = cardProductModel.getUnit() + " " + cardProductModel.getWeight();
         long mrpTotal = qty * cardProductModel.getMrp_total();
         long totalRate = qty * cardProductModel.getPrice_total();
         String rate = "Rs " + cardProductModel.getPrice_total();

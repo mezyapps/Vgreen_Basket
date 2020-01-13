@@ -26,6 +26,9 @@ public class CardProductModel {
     @ColumnInfo(name = "weight")
     private String weight;
 
+    @ColumnInfo(name = "weight_id")
+    private String weight_id;
+
     @ColumnInfo(name = "MRP")
     private long mrp;
 
@@ -47,13 +50,14 @@ public class CardProductModel {
     public CardProductModel() {
     }
 
-    public CardProductModel(long id,long product_id, String product_name, long unit_id,long unit, String weight, long mrp, long mrp_total, long price, long price_total, long qty,String imagepath) {
+    public CardProductModel(long id,long product_id, String product_name, long unit_id,long unit, String weight,String weight_id, long mrp, long mrp_total, long price, long price_total, long qty,String imagepath) {
         this.id=id;
         this.product_id = product_id;
         this.product_name = product_name;
         this.unit_id = unit_id;
         this.unit = unit;
         this.weight = weight;
+        this.weight_id = weight_id;
         this.mrp = mrp;
         this.mrp_total = mrp_total;
         this.price = price;
@@ -156,5 +160,13 @@ public class CardProductModel {
 
     public void setUnit(long unit) {
         this.unit = unit;
+    }
+
+    public String getWeight_id() {
+        return weight_id;
+    }
+
+    public void setWeight_id(String weight_id) {
+        this.weight_id = weight_id;
     }
 }

@@ -3,6 +3,8 @@ package com.mezyapps.vgreenbasket.api_common;
 
 import com.mezyapps.vgreenbasket.model.SuccessModel;
 
+import org.json.JSONArray;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -49,5 +51,17 @@ public interface ApiInterface {
                               @Field("address") String address,
                               @Field("location_id") String location_id,
                               @Field("route_id") String route_id);
+
+    @POST(EndApi.PLACE_ORDER)
+    @FormUrlEncoded
+    Call<SuccessModel> callPlaceOrder(
+            @Field("user_id") String user_id,
+            @Field("product_id") JSONArray product_id,
+            @Field("unit_id") JSONArray unit_id,
+            @Field("weight_id") JSONArray weight_id,
+            @Field("total_wrp") JSONArray total_wrp,
+            @Field("total_price") JSONArray total_price,
+            @Field("qty") JSONArray qty,
+            @Field("payment_type") String payment_type);
 
 }

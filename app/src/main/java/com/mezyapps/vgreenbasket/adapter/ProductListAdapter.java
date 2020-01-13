@@ -175,10 +175,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             long id = Long.parseLong(productUnitModel.getId());
             long unit = Long.valueOf(productUnitModel.getProd_unit());
             String weight = productUnitModel.getProd_weight();
+            String weight_id = productUnitModel.getProd_weight_id();
             long rate = Long.parseLong(productUnitModel.getProd_rate());
             long mrp = Long.parseLong(productUnitModel.getProd_mrp());
             long qty = Long.parseLong("1");
-            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, mrp, mrp,rate, rate, qty,folder + productListModel.getProd_image()));
+            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight,weight_id, mrp, mrp,rate, rate, qty,folder + productListModel.getProd_image()));
             if (idVal != 0)
                 Toast.makeText(mContext, productName + "Added  Into Card Successfully", Toast.LENGTH_SHORT).show();
             else
@@ -189,10 +190,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             long id = Long.parseLong(productUnitModel.getId());
             long unit = Long.valueOf(productUnitModel.getProd_unit());
             String weight = productUnitModel.getProd_weight();
+            String weight_id = productUnitModel.getProd_weight_id();
             long rate = Long.parseLong(productUnitModel.getProd_rate());
             long mrp = Long.parseLong(productUnitModel.getProd_mrp());
             long qty = Long.parseLong("1");
-            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, mrp, mrp,rate, rate, qty,folder + productListModel.getProd_image()));
+            long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight,weight_id, mrp, mrp,rate, rate, qty,folder + productListModel.getProd_image()));
             if (idVal != 0)
                 Toast.makeText(mContext, productName + "  Added  Into Card", Toast.LENGTH_SHORT).show();
             else
