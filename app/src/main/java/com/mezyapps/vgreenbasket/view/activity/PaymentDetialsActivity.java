@@ -6,6 +6,7 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.mezyapps.vgreenbasket.model.SuccessModel;
 import com.mezyapps.vgreenbasket.utils.NetworkUtils;
 import com.mezyapps.vgreenbasket.utils.SharedLoginUtils;
 import com.mezyapps.vgreenbasket.utils.ShowProgressDialog;
+import com.mezyapps.vgreenbasket.utils.SuccessDialog;
 
 import org.json.JSONArray;
 
@@ -172,10 +174,20 @@ public class PaymentDetialsActivity extends AppCompatActivity {
                             code = successModule.getCode();
                             folder = successModule.getFolder();
                             if (code.equalsIgnoreCase("1")) {
-
-
+                                SuccessDialog successDialog=new SuccessDialog(PaymentDetialsActivity.this);
+                                successDialog.showDialog("Order Place Successfully");
+                                appDatabase.getProductDAO().deleteAllProduct();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(PaymentDetialsActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                                           }
+                                }, 2000);
                             } else {
-
+                                Toast.makeText(PaymentDetialsActivity.this, "Order Not Place", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(PaymentDetialsActivity.this, "Response Null", Toast.LENGTH_SHORT).show();

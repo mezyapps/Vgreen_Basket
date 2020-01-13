@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mezyapps.vgreenbasket.R;
@@ -28,6 +29,8 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
     private ProductCardListAdpater productCardListAdpater;
     private TextView textTotalAmt,textTotalSavedAmt;
     private Button btn_checkout;
+    private LinearLayout ll_cart_bottom,ll_recyclerView_Card;
+    private ImageView iv_no_data_found;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,9 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
         textTotalAmt=findViewById(R.id.textTotalAmt);
         btn_checkout=findViewById(R.id.btn_checkout);
         textTotalSavedAmt=findViewById(R.id.textTotalSavedAmt);
+        ll_cart_bottom=findViewById(R.id.ll_cart_bottom);
+        iv_no_data_found=findViewById(R.id.iv_no_data_found);
+        ll_recyclerView_Card=findViewById(R.id.ll_recyclerView_Card);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(CardActivity.this);
         recyclerView_Card.setLayoutManager(linearLayoutManager);
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
@@ -52,6 +58,13 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
         recyclerView_Card.setAdapter(productCardListAdpater);
         productCardListAdpater.notifyDataSetChanged();
         long total_rate = 0,total_saved=0,total_saved_mrp=0;
+
+        if (cardProductModelArrayList.size()==0)
+        {
+            ll_cart_bottom.setVisibility(View.GONE);
+            iv_no_data_found.setVisibility(View.VISIBLE);
+            ll_recyclerView_Card.setVisibility(View.GONE);
+        }
 
         for (int i=0;i<cardProductModelArrayList.size();i++)
         {

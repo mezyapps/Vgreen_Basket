@@ -57,9 +57,9 @@ public interface ApiInterface {
     Call<SuccessModel> callPlaceOrder(
             @Field("user_id") String user_id,
             @Field("product_id") JSONArray product_id,
-            @Field("unit_id") JSONArray unit_id,
+            @Field("unit") JSONArray unit_id,
             @Field("weight_id") JSONArray weight_id,
-            @Field("total_wrp") JSONArray total_wrp,
+            @Field("total_mrp") JSONArray total_mrp,
             @Field("total_price") JSONArray total_price,
             @Field("qty") JSONArray qty,
             @Field("payment_type") String payment_type);

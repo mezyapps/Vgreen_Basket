@@ -36,10 +36,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/no_data_found"
+            android:visibility="gone"
+            android:id="@+id/iv_no_data_found"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_above="@+id/ll_cart_bottom"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/ll_recyclerView_Card">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_Card"

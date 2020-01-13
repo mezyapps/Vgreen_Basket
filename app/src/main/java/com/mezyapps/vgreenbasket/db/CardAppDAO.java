@@ -21,6 +21,9 @@ public interface CardAppDAO {
     @Delete
     public void  deleteProduct(CardProductModel cardProductModel);
 
+    @Query("DELETE FROM ProductTable")
+    public void  deleteAllProduct();
+
     @Query("select * from ProductTable")
     public List<CardProductModel> getAppProduct();
 
