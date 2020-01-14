@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,10 +36,10 @@ import retrofit2.Response;
 public class OrderHistoryDetailsActivity extends AppCompatActivity {
 
     private OrderHistoryModel orderHistoryModel;
-    private String order_no, order_no_str, order_date, name, mobile_no, total_amt, order_status;
+    private String order_no, order_date, name, mobile_no, total_amt, order_status,address,total_mrp;
     private ImageView iv_back;
-    private TextView textOrderNo, textOrderDate, textName, textMobileNumber, textTotalAmt, textOrderStatus, textTotalItem,
-            textOrderNoTitle;
+    private TextView textOrderDate, textName, textMobileNumber, textTotalAmt, textOrderStatus, textTotalItem,
+            textOrderNoTitle,textDeliveryAddress,textOrderValue,textTotalAmtTopay,textTotalSavedAmt;
     private RecyclerView recyclerView_product_list;
     private ShowProgressDialog showProgressDialog;
     public static ApiInterface apiInterface;
@@ -61,7 +62,6 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         showProgressDialog = new ShowProgressDialog(OrderHistoryDetailsActivity.this);
         iv_back = findViewById(R.id.iv_back);
-        textOrderNo = findViewById(R.id.textOrderNo);
         textOrderDate = findViewById(R.id.textOrderDate);
         textName = findViewById(R.id.textName);
         textMobileNumber = findViewById(R.id.textMobileNumber);
@@ -71,27 +71,36 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         rr_recycle_view = findViewById(R.id.rr_recycle_view);
         textTotalItem = findViewById(R.id.textTotalItem);
         textOrderNoTitle = findViewById(R.id.textOrderNoTitle);
+        textDeliveryAddress = findViewById(R.id.textDeliveryAddress);
+        textOrderValue = findViewById(R.id.textOrderValue);
+        textTotalAmtTopay = findViewById(R.id.textTotalAmtTopay);
+        textTotalSavedAmt = findViewById(R.id.textTotalSavedAmt);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OrderHistoryDetailsActivity.this);
         recyclerView_product_list.setLayoutManager(linearLayoutManager);
 
         Bundle bundle = getIntent().getExtras();
         orderHistoryModel = bundle.getParcelable("ORDER_HD");
-        order_no_str = "Order  No : " + orderHistoryModel.getOrder_id();
         order_no = orderHistoryModel.getOrder_id();
         order_date = orderHistoryModel.getDate();
-        total_amt = "Total AMT : " + orderHistoryModel.getTotal_price();
-        order_status = "Order Status : " + orderHistoryModel.getStatus();
-        name = "Name : " + SharedLoginUtils.getUserName(OrderHistoryDetailsActivity.this);
-        mobile_no = "Mobile No : " + SharedLoginUtils.getUserMobile(OrderHistoryDetailsActivity.this);
+        total_amt =  orderHistoryModel.getTotal_price();
+        order_status = orderHistoryModel.getStatus();
+        total_mrp = orderHistoryModel.getTotal_mrp();
+        name =  SharedLoginUtils.getUserName(OrderHistoryDetailsActivity.this);
+        mobile_no = SharedLoginUtils.getUserMobile(OrderHistoryDetailsActivity.this);
+        address = SharedLoginUtils.getUserAddress(OrderHistoryDetailsActivity.this);
 
-        textOrderNo.setText(order_no_str);
         textOrderDate.setText(order_date);
         textOrderNoTitle.setText(order_no);
         textName.setText(name);
         textMobileNumber.setText(mobile_no);
-        textTotalAmt.setText(total_amt);
-        textOrderStatus.setText(order_status);
+        textDeliveryAddress.setText(address);
+        textOrderValue.setText(total_mrp);
+        textTotalAmtTopay.setText(total_amt);
+        int savedAmt=Integer.parseInt(total_mrp)- Integer.parseInt(total_amt);
+        textTotalSavedAmt.setText(String.valueOf(savedAmt));
+        //textTotalAmt.setText(total_amt);
+        //textOrderStatus.setText(order_status);
     }
 
     private void events() {
