@@ -64,4 +64,12 @@ public interface ApiInterface {
             @Field("qty") JSONArray qty,
             @Field("payment_type") String payment_type);
 
+    @POST(EndApi.ORDER_HISTORY_HD)
+    @FormUrlEncoded
+    Call<SuccessModel> orderHistoryHD(@Field("user_id") String user_id);
+
+    @POST(EndApi.ORDER_HISTORY_DT)
+    @FormUrlEncoded
+    Call<SuccessModel> orderHistoryDT(@Field("order_id") String order_id);
+
 }

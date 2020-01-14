@@ -33,6 +33,13 @@ public class SuccessModel {
     private ArrayList<NotificationModel> notificationModelArrayList;
 
 
+    @SerializedName("order_history_ht")
+    private ArrayList<OrderHistoryModel> orderHistoryModelArrayList;
+
+    @SerializedName("order_head_list")
+    private ArrayList<OrderHistoryDTModel> orderHistoryDTModelArrayList;
+
+
     public ArrayList<UserProfileModel> getUserProfileUpdateLoginModelArrayList() {
         return userProfileUpdateLoginModelArrayList;
     }
@@ -45,6 +52,21 @@ public class SuccessModel {
         return userProfileLoginModelArrayList;
     }
 
+    public ArrayList<OrderHistoryDTModel> getOrderHistoryDTModelArrayList() {
+        return orderHistoryDTModelArrayList;
+    }
+
+    public void setOrderHistoryDTModelArrayList(ArrayList<OrderHistoryDTModel> orderHistoryDTModelArrayList) {
+        this.orderHistoryDTModelArrayList = orderHistoryDTModelArrayList;
+    }
+
+    public ArrayList<OrderHistoryModel> getOrderHistoryModelArrayList() {
+        return orderHistoryModelArrayList;
+    }
+
+    public void setOrderHistoryModelArrayList(ArrayList<OrderHistoryModel> orderHistoryModelArrayList) {
+        this.orderHistoryModelArrayList = orderHistoryModelArrayList;
+    }
 
     public ArrayList<NotificationModel> getNotificationModelArrayList() {
         return notificationModelArrayList;
