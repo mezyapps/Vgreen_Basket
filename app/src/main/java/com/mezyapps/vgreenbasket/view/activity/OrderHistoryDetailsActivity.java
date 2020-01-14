@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +35,18 @@ import retrofit2.Response;
 public class OrderHistoryDetailsActivity extends AppCompatActivity {
 
     private OrderHistoryModel orderHistoryModel;
-    private String order_no,order_no_str,order_date,name,mobile_no,total_amt,order_status;
+    private String order_no, order_no_str, order_date, name, mobile_no, total_amt, order_status;
     private ImageView iv_back;
-    private TextView textOrderNo,textOrderDate,textName,textMobileNumber,textTotalAmt,textOrderStatus;
+    private TextView textOrderNo, textOrderDate, textName, textMobileNumber, textTotalAmt, textOrderStatus, textTotalItem,
+            textOrderNoTitle;
     private RecyclerView recyclerView_product_list;
     private ShowProgressDialog showProgressDialog;
     public static ApiInterface apiInterface;
-    private ArrayList<OrderHistoryDTModel> orderHistoryDTModelArrayList=new ArrayList<>();
+    private ArrayList<OrderHistoryDTModel> orderHistoryDTModelArrayList = new ArrayList<>();
     private OrderHistoryDTAdapter orderHistoryDTAdapter;
+    private RelativeLayout rr_recycle_view;
+    int arrayList_size;
+    boolean is_visible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,30 +60,34 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
     private void find_View_IDs() {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         showProgressDialog = new ShowProgressDialog(OrderHistoryDetailsActivity.this);
-        iv_back=findViewById(R.id.iv_back);
-        textOrderNo=findViewById(R.id.textOrderNo);
-        textOrderDate=findViewById(R.id.textOrderDate);
-        textName=findViewById(R.id.textName);
-        textMobileNumber=findViewById(R.id.textMobileNumber);
-        textTotalAmt=findViewById(R.id.textTotalAmt);
-        textOrderStatus=findViewById(R.id.textOrderStatus);
-        recyclerView_product_list=findViewById(R.id.recyclerView_product_list);
+        iv_back = findViewById(R.id.iv_back);
+        textOrderNo = findViewById(R.id.textOrderNo);
+        textOrderDate = findViewById(R.id.textOrderDate);
+        textName = findViewById(R.id.textName);
+        textMobileNumber = findViewById(R.id.textMobileNumber);
+        textTotalAmt = findViewById(R.id.textTotalAmt);
+        textOrderStatus = findViewById(R.id.textOrderStatus);
+        recyclerView_product_list = findViewById(R.id.recyclerView_product_list);
+        rr_recycle_view = findViewById(R.id.rr_recycle_view);
+        textTotalItem = findViewById(R.id.textTotalItem);
+        textOrderNoTitle = findViewById(R.id.textOrderNoTitle);
 
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(OrderHistoryDetailsActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OrderHistoryDetailsActivity.this);
         recyclerView_product_list.setLayoutManager(linearLayoutManager);
 
         Bundle bundle = getIntent().getExtras();
         orderHistoryModel = bundle.getParcelable("ORDER_HD");
-        order_no_str="Order  No : "+orderHistoryModel.getOrder_id();
-        order_no=orderHistoryModel.getOrder_id();
-        order_date=orderHistoryModel.getDate();
-        total_amt="Total AMT : "+orderHistoryModel.getTotal_price();
-        order_status="Order Status : "+orderHistoryModel.getStatus();
-        name="Name : "+SharedLoginUtils.getUserName(OrderHistoryDetailsActivity.this);
-        mobile_no="Mobile No : "+SharedLoginUtils.getUserMobile(OrderHistoryDetailsActivity.this);
+        order_no_str = "Order  No : " + orderHistoryModel.getOrder_id();
+        order_no = orderHistoryModel.getOrder_id();
+        order_date = orderHistoryModel.getDate();
+        total_amt = "Total AMT : " + orderHistoryModel.getTotal_price();
+        order_status = "Order Status : " + orderHistoryModel.getStatus();
+        name = "Name : " + SharedLoginUtils.getUserName(OrderHistoryDetailsActivity.this);
+        mobile_no = "Mobile No : " + SharedLoginUtils.getUserMobile(OrderHistoryDetailsActivity.this);
 
         textOrderNo.setText(order_no_str);
         textOrderDate.setText(order_date);
+        textOrderNoTitle.setText(order_no);
         textName.setText(name);
         textMobileNumber.setText(mobile_no);
         textTotalAmt.setText(total_amt);
@@ -97,6 +106,19 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        textTotalItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (is_visible) {
+                    rr_recycle_view.setVisibility(View.GONE);
+                    is_visible = false;
+                } else {
+                    rr_recycle_view.setVisibility(View.VISIBLE);
+                    is_visible = true;
+                }
+            }
+        });
     }
 
     private void callOrderHistoryDT() {
@@ -113,21 +135,22 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         SuccessModel successModule = response.body();
                         orderHistoryDTModelArrayList.clear();
-                        String message = null, code = null,folder;
+                        String message = null, code = null, folder;
                         if (successModule != null) {
                             code = successModule.getCode();
                             folder = successModule.getFolder();
                             if (code.equalsIgnoreCase("1")) {
 
-                                orderHistoryDTModelArrayList=successModule.getOrderHistoryDTModelArrayList();
-                                if(orderHistoryDTModelArrayList.size()!=0) {
+                                orderHistoryDTModelArrayList = successModule.getOrderHistoryDTModelArrayList();
+                                if (orderHistoryDTModelArrayList.size() != 0) {
+                                    arrayList_size = orderHistoryDTModelArrayList.size();
+                                    textTotalItem.setVisibility(View.VISIBLE);
+                                    textTotalItem.setText(String.valueOf(arrayList_size)+" "+"items");
                                     Collections.reverse(orderHistoryDTModelArrayList);
-                                    orderHistoryDTAdapter=new OrderHistoryDTAdapter(OrderHistoryDetailsActivity.this,orderHistoryDTModelArrayList,folder);
+                                    orderHistoryDTAdapter = new OrderHistoryDTAdapter(OrderHistoryDetailsActivity.this, orderHistoryDTModelArrayList, folder);
                                     recyclerView_product_list.setAdapter(orderHistoryDTAdapter);
                                     orderHistoryDTAdapter.notifyDataSetChanged();
-                                }
-                                else
-                                {
+                                } else {
                                     orderHistoryDTAdapter.notifyDataSetChanged();
                                 }
                             } else {
