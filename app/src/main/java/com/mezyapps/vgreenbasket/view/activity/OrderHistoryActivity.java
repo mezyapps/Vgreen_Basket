@@ -5,9 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -30,13 +34,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OrderHistoryActivity extends AppCompatActivity {
-    private ImageView iv_back,iv_no_data_found;
+    private ImageView iv_back,iv_no_data_found,iv_back_search,iv_search,iv_close;
     private RecyclerView recyclerView_order_history;
     private ArrayList<OrderHistoryModel> orderHistoryModelArrayList=new ArrayList<>();
     public static ApiInterface apiInterface;
     private ShowProgressDialog showProgressDialog;
     private String user_id;
     private OrderHistoryAdapter orderHistoryAdapter;
+    private RelativeLayout rr_toolbar,rr_toolbar_search;
+    private EditText edit_search;
 
 
 
@@ -55,6 +61,12 @@ public class OrderHistoryActivity extends AppCompatActivity {
         iv_back = findViewById(R.id.iv_back);
         iv_no_data_found = findViewById(R.id.iv_no_data_found);
         recyclerView_order_history = findViewById(R.id.recyclerView_order_history);
+        rr_toolbar = findViewById(R.id.rr_toolbar);
+        iv_back_search = findViewById(R.id.iv_back_search);
+        rr_toolbar_search = findViewById(R.id.rr_toolbar_search);
+        iv_search = findViewById(R.id.iv_search);
+        iv_close = findViewById(R.id.iv_close);
+        edit_search = findViewById(R.id.edit_search);
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(OrderHistoryActivity.this);
         recyclerView_order_history.setLayoutManager(linearLayoutManager);
@@ -72,6 +84,46 @@ public class OrderHistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        iv_back_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        iv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rr_toolbar.setVisibility(View.GONE);
+                rr_toolbar_search.setVisibility(View.VISIBLE);
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rr_toolbar_search.setVisibility(View.GONE);
+                rr_toolbar.setVisibility(View.VISIBLE);
+                edit_search.setText("");
+            }
+        });
+
+        edit_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                orderHistoryAdapter.getFilter().filter(edit_search.getText().toString().trim());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }

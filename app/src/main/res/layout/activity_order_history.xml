@@ -36,10 +36,47 @@
             android:layout_height="match_parent"
             android:padding="5dp"
             android:id="@+id/iv_search"
-            android:visibility="gone"
-            android:layout_marginEnd="10dp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_vector_search"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/light_gray"
+        android:visibility="gone"
+        android:id="@+id/rr_toolbar_search">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_arrow_back"
+            android:padding="5dp"
+            android:id="@+id/iv_back_search"/>
+
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="@string/search_product"
+            android:id="@+id/edit_search"
+            android:inputType="text"
+            android:background="@color/light_gray"
+            android:textColor="@color/dark_gray"
+            android:layout_alignRight="@+id/iv_close"
+            android:layout_toEndOf="@id/iv_back_search" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_vector_close"
+            android:padding="5dp"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/iv_close"/>
+
+
 
     </RelativeLayout>
 
