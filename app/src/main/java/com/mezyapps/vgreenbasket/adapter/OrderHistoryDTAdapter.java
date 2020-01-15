@@ -1,6 +1,7 @@
 package com.mezyapps.vgreenbasket.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class OrderHistoryDTAdapter extends RecyclerView.Adapter<OrderHistoryDTAd
         holder.textMrp.setText(mrp);
         holder.textPrice.setText(rate);
         holder.textQty.setText(qty);
+        holder.textMrp.setPaintFlags(holder.textMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
 
         final String imagePath = BaseApi.BASE_URL + folder + orderHistoryDTModel.getProd_image();

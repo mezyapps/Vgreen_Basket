@@ -11,4 +11,5 @@ public class EndApi extends BaseApi {
     public static final String PLACE_ORDER="ws_place_order";
     public static final String ORDER_HISTORY_HD="ws_order_history";
     public static final String ORDER_HISTORY_DT="ws_order_history_list";
+    public static final String CANCEL_ORDER="ws_cancel_order";
 }

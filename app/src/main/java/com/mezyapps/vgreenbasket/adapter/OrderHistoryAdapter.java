@@ -38,10 +38,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final OrderHistoryModel orderHistoryModel=orderHistoryModelArrayList.get(position);
 
-        String order_no="Order No : "+orderHistoryModel.getOrder_id();
-        String order_date="Order Date : "+orderHistoryModel.getDate();
-        String total_price="Total Amt : "+orderHistoryModel.getTotal_price();
-        String status="status : "+orderHistoryModel.getStatus();
+        String order_no=orderHistoryModel.getOrder_id();
+        String order_date=orderHistoryModel.getDate();
+        String total_price=orderHistoryModel.getTotal_price();
+        String status=orderHistoryModel.getStatus();
         holder.textOrderNo.setText(order_no);
         holder.textOrderDate.setText(order_date);
         holder.textTotalPrice.setText(total_price);

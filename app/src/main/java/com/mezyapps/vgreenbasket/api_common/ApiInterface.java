@@ -72,4 +72,9 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<SuccessModel> orderHistoryDT(@Field("order_id") String order_id);
 
+    @POST(EndApi.CANCEL_ORDER)
+    @FormUrlEncoded
+    Call<SuccessModel> cancelOrder(@Field("order_id") String order_id,
+                                   @Field("user_id") String user_id);
+
 }

@@ -54,17 +54,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Name"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textMobileNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile No"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
 
@@ -74,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:text="Date"
                     android:textAllCaps="true"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -216,7 +209,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="2"
-                        android:gravity="end"
+                        android:drawableStart="@drawable/ic_vector_money"
+                        android:drawablePadding="5dp"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -251,7 +245,8 @@
                         android:layout_gravity="end"
                         android:layout_weight="2"
                         android:textStyle="bold"
-                        android:gravity="end"
+                        android:drawableStart="@drawable/ic_vector_money"
+                        android:drawablePadding="5dp"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -279,7 +274,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="2"
-                        android:gravity="end"
+                        android:drawableStart="@drawable/ic_vector_money"
+                        android:drawablePadding="5dp"
                         android:textColor="@color/green"
                         android:textSize="14sp" />
 
@@ -288,7 +284,24 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel Order"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:id="@+id/btn_cancel_order"
+                    android:background="@drawable/shape_cancel_btn"/>
+
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>
