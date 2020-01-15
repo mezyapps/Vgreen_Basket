@@ -4,16 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.mezyapps.vgreenbasket.R;
 import com.mezyapps.vgreenbasket.adapter.OrderHistoryDTAdapter;
@@ -40,7 +46,7 @@ import retrofit2.Response;
 public class OrderHistoryDetailsActivity extends AppCompatActivity {
 
     private OrderHistoryModel orderHistoryModel;
-    private String order_no, user_id, order_date, name, total_amt, order_status, address, total_mrp;
+    private String order_no, user_id, order_date, name, total_amt, order_status, address, total_mrp,reason_order_cancel;
     private ImageView iv_back;
     private TextView textOrderDate, textName, textMobileNumber, textOrderStatus, textTotalItem,
             textOrderNoTitle, textDeliveryAddress, textOrderValue, textTotalAmtTopay, textTotalSavedAmt;
@@ -143,10 +149,49 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         btn_cancel_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetworkUtils.isNetworkAvailable(OrderHistoryDetailsActivity.this)) {
-                    callCancelOrder();
-                } else {
-                    NetworkUtils.isNetworkNotAvailable(OrderHistoryDetailsActivity.this);
+                cancelDialog();
+            }
+        });
+    }
+
+    public void cancelDialog() {
+        final Dialog cancel_dialog = new Dialog(OrderHistoryDetailsActivity.this);
+        cancel_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        cancel_dialog.setContentView(R.layout.dialog_cancel_order);
+        final EditText edt_resign=cancel_dialog.findViewById(R.id.edt_resign);
+        Button btn_yes=cancel_dialog.findViewById(R.id.btn_yes);
+        Button btn_no=cancel_dialog.findViewById(R.id.btn_no);
+        cancel_dialog.setCancelable(false);
+        cancel_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        cancel_dialog.show();
+
+        Window window = cancel_dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        btn_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancel_dialog.dismiss();
+            }
+        });
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reason_order_cancel=edt_resign.getText().toString();
+                if(reason_order_cancel.equalsIgnoreCase(""))
+                {
+                    edt_resign.setError("Enter Reason Cancel Order");
+                    edt_resign.requestFocus();
+                }
+                else {
+                    cancel_dialog.dismiss();
+                    edt_resign.clearFocus();
+                    if (NetworkUtils.isNetworkAvailable(OrderHistoryDetailsActivity.this)) {
+                        callCancelOrder();
+                    } else {
+                        NetworkUtils.isNetworkNotAvailable(OrderHistoryDetailsActivity.this);
+                    }
                 }
             }
         });
@@ -154,7 +199,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
 
     private void callCancelOrder() {
         showProgressDialog.showDialog();
-        Call<SuccessModel> call = apiInterface.cancelOrder(order_no, user_id);
+        Call<SuccessModel> call = apiInterface.cancelOrder(order_no, user_id,reason_order_cancel);
         call.enqueue(new Callback<SuccessModel>() {
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
@@ -171,7 +216,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
                             code = successModule.getCode();
                             if (code.equalsIgnoreCase("1")) {
                                 Toast.makeText(OrderHistoryDetailsActivity.this, "Your Order Canceled", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(OrderHistoryDetailsActivity.this,OrderHistoryActivity.class));
+                                startActivity(new Intent(OrderHistoryDetailsActivity.this, OrderHistoryActivity.class));
                                 finish();
                             } else {
                                 Toast.makeText(OrderHistoryDetailsActivity.this, "Your Order Not Cancel", Toast.LENGTH_SHORT).show();
@@ -185,6 +230,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(Call<SuccessModel> call, Throwable t) {
                 showProgressDialog.dismissDialog();

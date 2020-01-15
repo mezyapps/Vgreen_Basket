@@ -190,7 +190,7 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
             }
 
             @Override
-            public void onFailure(Call<SuccessModel> call, Throwable t) {
+            public void onFailure(Call<SuccessModel> call, Throwable t3) {
                 showProgressDialog.dismissDialog();
             }
         });

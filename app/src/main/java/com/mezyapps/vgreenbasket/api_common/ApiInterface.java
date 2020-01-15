@@ -75,6 +75,7 @@ public interface ApiInterface {
     @POST(EndApi.CANCEL_ORDER)
     @FormUrlEncoded
     Call<SuccessModel> cancelOrder(@Field("order_id") String order_id,
-                                   @Field("user_id") String user_id);
+                                   @Field("user_id") String user_id,
+                                   @Field("reason") String reason);
 
 }
