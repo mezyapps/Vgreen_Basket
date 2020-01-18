@@ -51,6 +51,18 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.textOrderNo.setText(order_no);
         holder.textOrderDate.setText(order_date);
         holder.textTotalPrice.setText(total_price);
+        
+        if(status.equalsIgnoreCase("cancelled"))
+        {
+            holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.red));
+        }else if(status.equalsIgnoreCase("delivered"))
+        {
+            holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.green));
+        }
+        else{
+            holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.blue));
+        }
+
         holder.textStatus.setText(status);
         String party_name= SharedLoginUtils.getUserName(mContext);
         holder.textPartyName.setText(party_name);

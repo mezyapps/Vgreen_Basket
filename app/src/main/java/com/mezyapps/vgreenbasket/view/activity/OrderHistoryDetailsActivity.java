@@ -100,6 +100,11 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         address = SharedLoginUtils.getUserAddress(OrderHistoryDetailsActivity.this);
         user_id = SharedLoginUtils.getUserId(OrderHistoryDetailsActivity.this);
 
+        if(order_status.equalsIgnoreCase("cancelled") || order_status.equalsIgnoreCase("delivered"))
+        {
+            btn_cancel_order.setVisibility(View.GONE);
+        }
+
   /*      SimpleDateFormat formatter1=new SimpleDateFormat("dd-MM-yyyy");
 
         try {
