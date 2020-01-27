@@ -41,11 +41,11 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_user_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp"
-                android:id="@+id/ll_user_details">
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/textName"
@@ -71,25 +71,88 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Delivery Address"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <RadioGroup
+                    android:id="@+id/rbg_delivery_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@+id/rbSame_as_address">
+
+                    <RadioButton
+                        android:id="@+id/rbSame_as_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Same As Address"
+                        android:textStyle="bold"/>
+
+
+                    <RadioButton
+                        android:id="@+id/rbOther_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Other Address" />
+
+
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/edt_other_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:hint="Enter Other Address"
+                    android:inputType="text"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+
+                <TextView
+                    android:id="@+id/textAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_login_sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/ll_login_sign_up"
                 android:orientation="horizontal"
-                android:visibility="gone"
                 android:padding="10dp"
+                android:visibility="gone"
                 android:weightSum="2">
 
 
                 <LinearLayout
+                    android:id="@+id/ll_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:id="@+id/ll_login"
                     android:background="@drawable/shape_login">
 
                     <TextView
@@ -105,12 +168,12 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_sign_up"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:id="@+id/ll_sign_up"
                     android:background="@drawable/shape_sign_up">
 
 
@@ -140,7 +203,6 @@
                 android:padding="5dp">
 
 
-
                 <TextView
                     android:id="@+id/textTotalMrp"
                     android:layout_width="match_parent"
@@ -164,7 +226,6 @@
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
-
 
 
                 <View
@@ -210,7 +271,7 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="@string/cash_on_delivery"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
@@ -219,13 +280,13 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/btn_place_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/btn_shape"
                     android:text="@string/place_order"
-                    android:id="@+id/btn_place_order"
                     android:textColor="@color/white" />
 
             </RelativeLayout>

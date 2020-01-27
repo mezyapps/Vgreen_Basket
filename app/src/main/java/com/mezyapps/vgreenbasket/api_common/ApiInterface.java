@@ -62,7 +62,9 @@ public interface ApiInterface {
             @Field("total_mrp") JSONArray total_mrp,
             @Field("total_price") JSONArray total_price,
             @Field("qty") JSONArray qty,
-            @Field("payment_type") String payment_type);
+            @Field("payment_type") String payment_type,
+            @Field("is_address") String is_address,
+            @Field("address") String address);
 
     @POST(EndApi.ORDER_HISTORY_HD)
     @FormUrlEncoded
