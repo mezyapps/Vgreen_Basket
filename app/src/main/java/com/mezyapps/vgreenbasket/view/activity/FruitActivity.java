@@ -209,7 +209,7 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
     public int cartCount() {
         ArrayList<CardProductModel> cardProductModelArrayList=new ArrayList<>();
         AppDatabase appDatabase;
-        appDatabase= Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"VgreenDB").allowMainThreadQueries().build();
+        appDatabase= AppDatabase.getInStatce(FruitActivity.this);
         cardProductModelArrayList.clear();
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
         int size=cardProductModelArrayList.size();

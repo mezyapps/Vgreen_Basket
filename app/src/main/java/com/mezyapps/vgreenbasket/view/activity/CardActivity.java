@@ -42,7 +42,7 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
     }
 
     private void find_View_ID() {
-        appDatabase= Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"VgreenDB").allowMainThreadQueries().build();
+        appDatabase= AppDatabase.getInStatce(CardActivity.this);
         iv_back=findViewById(R.id.iv_back);
         recyclerView_Card=findViewById(R.id.recyclerView_Card);
         textTotalAmt=findViewById(R.id.textTotalAmt);

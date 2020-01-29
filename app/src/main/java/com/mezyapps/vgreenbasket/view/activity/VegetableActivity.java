@@ -208,7 +208,7 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
     public int cartCount() {
         ArrayList<CardProductModel> cardProductModelArrayList=new ArrayList<>();
         AppDatabase appDatabase;
-        appDatabase= Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"VgreenDB").allowMainThreadQueries().build();
+        appDatabase= appDatabase= AppDatabase.getInStatce(VegetableActivity.this);
         cardProductModelArrayList.clear();
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
         int size=cardProductModelArrayList.size();

@@ -52,7 +52,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         this.productListDashboardModelArrayList = productListDashboardModelArrayList;
         this.arrayListFiltered = productListDashboardModelArrayList;
         this.folder = folder;
-        appDatabase = Room.databaseBuilder(mContext, AppDatabase.class, "VgreenDB").allowMainThreadQueries().build();
+        appDatabase= AppDatabase.getInStatce(mContext);
         this.referenceCardUiInterface=referenceCardUiInterface;
     }
 

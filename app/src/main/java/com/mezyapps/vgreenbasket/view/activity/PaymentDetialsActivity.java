@@ -44,6 +44,7 @@ import retrofit2.Response;
 
 public class PaymentDetialsActivity extends AppCompatActivity {
     private ImageView iv_back;
+
     private ArrayList<CardProductModel> cardProductModelArrayList = new ArrayList<>();
     private AppDatabase appDatabase;
     private TextView textTotalAmt, textTotalSavedAmt, textName, textMobileNumber, textTotalMrp, textAddress;
@@ -68,7 +69,7 @@ public class PaymentDetialsActivity extends AppCompatActivity {
     private void find_View_IDs() {
         showProgressDialog = new ShowProgressDialog(PaymentDetialsActivity.this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "VgreenDB").allowMainThreadQueries().build();
+        appDatabase= appDatabase= AppDatabase.getInStatce(PaymentDetialsActivity.this);
         iv_back = findViewById(R.id.iv_back);
         textTotalAmt = findViewById(R.id.textTotalAmt);
         textTotalSavedAmt = findViewById(R.id.textTotalSavedAmt);
@@ -177,7 +178,6 @@ public class PaymentDetialsActivity extends AppCompatActivity {
         JSONArray jsonArrayTotalMRP = getProductTotalMRP();
         JSONArray jsonArrayTotalPrice = getProductTotalPrice();
         JSONArray total_qty = getProductTotalQty();
-
         Call<SuccessModel> call = apiInterface.callPlaceOrder(user_id, jsonArrayProductID, jsonArrayUnitID, jsonArrayWeight, jsonArrayTotalMRP, jsonArrayTotalPrice, total_qty, payment_type, isCheckAddress, other_address);
         call.enqueue(new Callback<SuccessModel>() {
             @Override
@@ -241,6 +241,7 @@ public class PaymentDetialsActivity extends AppCompatActivity {
                 return false;
             }
         }
+
         return true;
     }
 

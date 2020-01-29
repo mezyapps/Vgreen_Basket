@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private AppDatabase appDatabase;
     private ArrayList<CardProductModel> cardProductModelArrayList = new ArrayList<>();
     private RelativeLayout rr_cart;
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        user_id=SharedLoginUtils.getUserId(MainActivity.this);
         FirebaseMessaging.getInstance().subscribeToTopic(getResources().getString(R.string.topic));
+        FirebaseMessaging.getInstance().subscribeToTopic(user_id);
 
         find_View_IdS();
         loadFragment(new HomeFragment());
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void find_View_IdS() {
-        appDatabase= Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"VgreenDB").allowMainThreadQueries().build();
+        appDatabase= appDatabase= AppDatabase.getInStatce(MainActivity.this);
         iv_drawer = findViewById(R.id.iv_drawer);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
@@ -241,6 +244,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(getResources().getString(R.string.topic));
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(user_id);
+
                 SharedLoginUtils.removeUserSharedUtils(MainActivity.this);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);

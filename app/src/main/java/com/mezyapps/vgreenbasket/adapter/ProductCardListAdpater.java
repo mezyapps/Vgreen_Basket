@@ -19,6 +19,7 @@ import com.mezyapps.vgreenbasket.api_common.BaseApi;
 import com.mezyapps.vgreenbasket.db.AppDatabase;
 import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
 import com.mezyapps.vgreenbasket.utils.ReferenceCardUiInterface;
+import com.mezyapps.vgreenbasket.view.activity.PaymentDetialsActivity;
 import com.squareup.picasso.Picasso;
 
 
@@ -34,7 +35,7 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
     public ProductCardListAdpater(Context mContext, ArrayList<CardProductModel> cardProductModelArrayList,ReferenceCardUiInterface referenceCardUiInterface) {
         this.mContext = mContext;
         this.cardProductModelArrayList = cardProductModelArrayList;
-        appDatabase = Room.databaseBuilder(mContext, AppDatabase.class, "VgreenDB").allowMainThreadQueries().build();
+        appDatabase= AppDatabase.getInStatce(mContext);
         this.referenceCardUiInterface=referenceCardUiInterface;
     }
 
