@@ -44,28 +44,28 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         final OrderHistoryModel orderHistoryModel=orderHistoryModelArrayList.get(position);
 
-        String order_no=orderHistoryModel.getOrder_id();
-        String order_date=orderHistoryModel.getDate();
-        String total_price=orderHistoryModel.getTotal_price();
-        String status=orderHistoryModel.getStatus();
-        holder.textOrderNo.setText(order_no);
-        holder.textOrderDate.setText(order_date);
-        holder.textTotalPrice.setText(total_price);
-        
-        if(status.equalsIgnoreCase("cancelled"))
-        {
-            holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.red));
-        }else if(status.equalsIgnoreCase("delivered"))
-        {
-            holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.green));
-        }
-        else{
-            holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.blue));
-        }
+            String order_no=orderHistoryModel.getOrder_id();
+            String order_date=orderHistoryModel.getDate();
+            String total_price=orderHistoryModel.getTotal_price();
+            String status=orderHistoryModel.getStatus();
+            holder.textOrderNo.setText(order_no);
+            holder.textOrderDate.setText(order_date);
+            holder.textTotalPrice.setText(total_price);
 
-        holder.textStatus.setText(status);
-        String party_name= SharedLoginUtils.getUserName(mContext);
-        holder.textPartyName.setText(party_name);
+            if(status.equalsIgnoreCase("cancelled"))
+            {
+                holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.red));
+            }else if(status.equalsIgnoreCase("delivered"))
+            {
+                holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.green));
+            }
+            else{
+                holder.textStatus.setTextColor(mContext.getResources().getColor(R.color.blue));
+            }
+
+            holder.textStatus.setText(status);
+            String party_name= SharedLoginUtils.getUserName(mContext);
+            holder.textPartyName.setText(party_name);
 
         holder.cardView_order_history.setOnClickListener(new View.OnClickListener() {
             @Override

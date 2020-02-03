@@ -52,6 +52,9 @@ public class ProfileActivity extends AppCompatActivity {
     private ShowProgressDialog showProgressDialog;
     private ArrayList<UserProfileModel> userProfileModelArrayList = new ArrayList<>();
 
+    /*Spinner Array Adapter*/
+    ArrayAdapter spinnerRouteArrayAdapter, spinnerLocationArrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -269,11 +272,13 @@ public class ProfileActivity extends AppCompatActivity {
                                     for (LocationModel locationModel : locationModelArrayList) {
                                         location_string_arrayList.add(locationModel.getLocation_name());
                                     }
-                                    ArrayAdapter arrayAdapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_spinner_item, location_string_arrayList);
-                                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    SpinnerLocation.setAdapter(arrayAdapter);
+                                    spinnerLocationArrayAdapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_spinner_item, location_string_arrayList);
+                                    spinnerLocationArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    SpinnerLocation.setAdapter(spinnerLocationArrayAdapter);
                                     SpinnerLocation.setSelection(Integer.parseInt(location));
-                                    arrayAdapter.notifyDataSetChanged();
+                                    spinnerLocationArrayAdapter.notifyDataSetChanged();
+                                } else {
+                                    spinnerLocationArrayAdapter.notifyDataSetChanged();
                                 }
                             } else {
                                 Toast.makeText(ProfileActivity.this, "No Response", Toast.LENGTH_SHORT).show();
@@ -319,12 +324,14 @@ public class ProfileActivity extends AppCompatActivity {
                                     for (RouteModel routeModel : routeModelArrayList) {
                                         route_string_arrayList.add(routeModel.getRoute_name());
                                     }
-                                    ArrayAdapter arrayAdapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_spinner_item, route_string_arrayList);
-                                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    SpinnerRoute.setAdapter(arrayAdapter);
+                                    spinnerRouteArrayAdapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_spinner_item, route_string_arrayList);
+                                    spinnerRouteArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    SpinnerRoute.setAdapter(spinnerRouteArrayAdapter);
                                     SpinnerRoute.setSelection(Integer.parseInt(route));
-                                    arrayAdapter.notifyDataSetChanged();
+                                    spinnerRouteArrayAdapter.notifyDataSetChanged();
 
+                                } else {
+                                    spinnerRouteArrayAdapter.notifyDataSetChanged();
                                 }
 
                             } else {

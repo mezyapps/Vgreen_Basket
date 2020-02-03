@@ -43,4 +43,5 @@
     <string name="payment_option">payment option</string>
     <string name="cash_on_delivery">Cash On Delivery</string>
     <string name="place_order">Place Order</string>
+    <string name="change_password">Change Password</string>
 </resources>

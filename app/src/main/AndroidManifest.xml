@@ -20,7 +20,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".view.activity.OrderHistoryDetailsActivity"></activity>
+        <activity android:name=".view.activity.OrderHistoryDetailsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.PaymentDetialsActivity"
             android:screenOrientation="portrait" />

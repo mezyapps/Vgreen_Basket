@@ -30,6 +30,7 @@ import com.mezyapps.vgreenbasket.R;
 import com.mezyapps.vgreenbasket.db.AppDatabase;
 import com.mezyapps.vgreenbasket.db.entity.CardProductModel;
 import com.mezyapps.vgreenbasket.utils.SharedLoginUtils;
+import com.mezyapps.vgreenbasket.view.fragment.ChangePasswordFragment;
 import com.mezyapps.vgreenbasket.view.fragment.HomeFragment;
 import com.mezyapps.vgreenbasket.view.fragment.NotificationListFragment;
 
@@ -60,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         user_id=SharedLoginUtils.getUserId(MainActivity.this);
         FirebaseMessaging.getInstance().subscribeToTopic(getResources().getString(R.string.topic));
-        FirebaseMessaging.getInstance().subscribeToTopic(user_id);
+        if(!user_id.equalsIgnoreCase("")) {
+            FirebaseMessaging.getInstance().subscribeToTopic(user_id);
+        }
 
         find_View_IdS();
         loadFragment(new HomeFragment());
@@ -109,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this,OrderHistoryActivity.class));
                 }   else if (id == R.id.nav_share_app) {
                     shareApplication();
+                } else if (id == R.id.nav_change_pass) {
+                    loadFragment(new ChangePasswordFragment());
                 } else if (id == R.id.nav_logout) {
                     logoutApplication();
                 }
@@ -244,8 +249,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(getResources().getString(R.string.topic));
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(user_id);
-
+                if(!user_id.equalsIgnoreCase("")) {
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(user_id);
+                }
                 SharedLoginUtils.removeUserSharedUtils(MainActivity.this);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);

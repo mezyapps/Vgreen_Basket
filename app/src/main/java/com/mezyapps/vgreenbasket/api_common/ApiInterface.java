@@ -80,4 +80,8 @@ public interface ApiInterface {
                                    @Field("user_id") String user_id,
                                    @Field("reason") String reason);
 
+    @POST(EndApi.WS_CHANGE_PASSWORD)
+    @FormUrlEncoded
+    Call<SuccessModel> chnagePassword(@Field("user_id") String user_id,
+                                      @Field("password") String password);
 }

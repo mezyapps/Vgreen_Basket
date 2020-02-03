@@ -39,21 +39,24 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
 
     private ImageView iv_back;
-    private AutoCompleteTextView textName,textAddress,textMobileNumber,textPassword;
+    private AutoCompleteTextView textName, textAddress, textMobileNumber, textPassword;
     private Button btn_sign_up;
-    private Spinner SpinnerLocation,SpinnerRoute;
-    private String name,address,mobile,password;
+    private Spinner SpinnerLocation, SpinnerRoute;
+    private String name, address, mobile, password;
     public static ApiInterface apiInterface;
 
-    private String location_id="",route_id="";
+    private String location_id = "", route_id = "";
     //Spinner Location
     private ArrayList<LocationModel> locationModelArrayList = new ArrayList<>();
     private ArrayList<String> location_string_arrayList = new ArrayList<>();
     //Spinner Location
     private ArrayList<RouteModel> routeModelArrayList = new ArrayList<>();
     private ArrayList<String> route_string_arrayList = new ArrayList<>();
-    private ArrayList<UserProfileModel> userProfileModelArrayList=new ArrayList<>();
+    private ArrayList<UserProfileModel> userProfileModelArrayList = new ArrayList<>();
     private ShowProgressDialog showProgressDialog;
+
+    /*Spinner Array Adapter*/
+    ArrayAdapter spinnerRouteArrayAdapter,spinnerLocationArrayAdapter;
 
 
     @Override
@@ -67,15 +70,15 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void find_View_IDs() {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        showProgressDialog=new ShowProgressDialog(SignUpActivity.this);
-        iv_back=findViewById(R.id.iv_back);
-        textName=findViewById(R.id.textName);
-        textAddress=findViewById(R.id.textAddress);
-        textMobileNumber=findViewById(R.id.textMobileNumber);
-        textPassword=findViewById(R.id.textPassword);
-        btn_sign_up=findViewById(R.id.btn_sign_up);
-        SpinnerLocation=findViewById(R.id.SpinnerLocation);
-        SpinnerRoute=findViewById(R.id.SpinnerRoute);
+        showProgressDialog = new ShowProgressDialog(SignUpActivity.this);
+        iv_back = findViewById(R.id.iv_back);
+        textName = findViewById(R.id.textName);
+        textAddress = findViewById(R.id.textAddress);
+        textMobileNumber = findViewById(R.id.textMobileNumber);
+        textPassword = findViewById(R.id.textPassword);
+        btn_sign_up = findViewById(R.id.btn_sign_up);
+        SpinnerLocation = findViewById(R.id.SpinnerLocation);
+        SpinnerRoute = findViewById(R.id.SpinnerRoute);
 
 
         if (NetworkUtils.isNetworkAvailable(SignUpActivity.this)) {
@@ -90,14 +93,13 @@ public class SignUpActivity extends AppCompatActivity {
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            onBackPressed();
+                onBackPressed();
             }
         });
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validation())
-                {
+                if (validation()) {
                     if (NetworkUtils.isNetworkAvailable(SignUpActivity.this)) {
                         callSignup();
                     } else {
@@ -110,7 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 try {
-                    int location_int= Integer.parseInt(locationModelArrayList.get(position).getId());
+                    int location_int = Integer.parseInt(locationModelArrayList.get(position).getId());
                     location_id = String.valueOf(location_int);
 
                     if (NetworkUtils.isNetworkAvailable(SignUpActivity.this)) {
@@ -133,7 +135,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 try {
-                    int route_id_int= Integer.parseInt(routeModelArrayList.get(position).getRoute_id());
+                    int route_id_int = Integer.parseInt(routeModelArrayList.get(position).getRoute_id());
                     route_id = String.valueOf(route_id_int);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -149,46 +151,39 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean validation() {
-        name=textName.getText().toString().trim();
-        address=textAddress.getText().toString().trim();
-        mobile=textMobileNumber.getText().toString().trim();
-        password=textPassword.getText().toString().trim();
+        name = textName.getText().toString().trim();
+        address = textAddress.getText().toString().trim();
+        mobile = textMobileNumber.getText().toString().trim();
+        password = textPassword.getText().toString().trim();
 
-        if(name.equalsIgnoreCase(""))
-        {
+        if (name.equalsIgnoreCase("")) {
             textName.setError("Please Enter Name");
             textName.requestFocus();
             return false;
-        }else if(address.equalsIgnoreCase(""))
-        {
+        } else if (address.equalsIgnoreCase("")) {
             textAddress.setError("Please Enter Address");
             textAddress.requestFocus();
             return false;
-        }else if(mobile.equalsIgnoreCase(""))
-        {
+        } else if (mobile.equalsIgnoreCase("")) {
             textMobileNumber.setError("Please Enter Mobile Number");
             textMobileNumber.requestFocus();
             return false;
-        }else if (mobile.length()<10)
-        {
+        } else if (mobile.length() < 10) {
             textMobileNumber.setError("Please Valid 10 Digit Mobile Number");
             textMobileNumber.requestFocus();
             return false;
-        }else if (password.equalsIgnoreCase(""))
-        {
+        } else if (password.equalsIgnoreCase("")) {
             textPassword.setError("Please Enter Password");
             textPassword.requestFocus();
             return false;
-        }else if (location_id.equalsIgnoreCase(""))
-        {
+        } else if (location_id.equalsIgnoreCase("")) {
             Toast.makeText(this, "Select Location", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (route_id.equalsIgnoreCase(""))
-        {
+        } else if (route_id.equalsIgnoreCase("")) {
             Toast.makeText(this, "Select Route", Toast.LENGTH_SHORT).show();
             return false;
         }
-        return  true;
+        return true;
     }
 
     private void callLocationList() {
@@ -214,11 +209,14 @@ public class SignUpActivity extends AppCompatActivity {
                                     for (LocationModel locationModel : locationModelArrayList) {
                                         location_string_arrayList.add(locationModel.getLocation_name());
                                     }
-                                    ArrayAdapter arrayAdapter = new ArrayAdapter(SignUpActivity.this, android.R.layout.simple_spinner_item, location_string_arrayList);
-                                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    SpinnerLocation.setAdapter(arrayAdapter);
-                                    arrayAdapter.notifyDataSetChanged();
-
+                                    spinnerLocationArrayAdapter=new ArrayAdapter(SignUpActivity.this, android.R.layout.simple_spinner_item, location_string_arrayList);
+                                    spinnerLocationArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    SpinnerLocation.setAdapter(spinnerLocationArrayAdapter);
+                                    spinnerLocationArrayAdapter.notifyDataSetChanged();
+                                }
+                                else
+                                {
+                                    spinnerLocationArrayAdapter.notifyDataSetChanged();
                                 }
 
                             } else {
@@ -266,11 +264,13 @@ public class SignUpActivity extends AppCompatActivity {
                                     for (RouteModel routeModel : routeModelArrayList) {
                                         route_string_arrayList.add(routeModel.getRoute_name());
                                     }
-                                    ArrayAdapter arrayAdapter = new ArrayAdapter(SignUpActivity.this, android.R.layout.simple_spinner_item, route_string_arrayList);
-                                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                    SpinnerRoute.setAdapter(arrayAdapter);
-                                    arrayAdapter.notifyDataSetChanged();
+                                    spinnerRouteArrayAdapter = new ArrayAdapter(SignUpActivity.this, android.R.layout.simple_spinner_item, route_string_arrayList);
+                                    spinnerRouteArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                    SpinnerRoute.setAdapter(spinnerRouteArrayAdapter);
+                                    spinnerRouteArrayAdapter.notifyDataSetChanged();
 
+                                } else {
+                                    spinnerRouteArrayAdapter.notifyDataSetChanged();
                                 }
 
                             } else {
@@ -297,7 +297,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void callSignup() {
         showProgressDialog.showDialog();
-        Call<SuccessModel> call = apiInterface.signUp(name,mobile,address,password,location_id,route_id);
+        Call<SuccessModel> call = apiInterface.signUp(name, mobile, address, password, location_id, route_id);
         call.enqueue(new Callback<SuccessModel>() {
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
@@ -316,19 +316,19 @@ public class SignUpActivity extends AppCompatActivity {
                             if (code.equalsIgnoreCase("1")) {
                                 userProfileModelArrayList = successModule.getUserProfileSignupModelArrayList();
                                 if (userProfileModelArrayList.size() != 0) {
-                                    String id=userProfileModelArrayList.get(0).getId();
-                                    String name=userProfileModelArrayList.get(0).getName();
-                                    String mobile=userProfileModelArrayList.get(0).getMobile_no();
-                                    String address=userProfileModelArrayList.get(0).getAddress();
-                                    String location=userProfileModelArrayList.get(0).getLocation_id();
-                                    String route=userProfileModelArrayList.get(0).getRoute_id();
+                                    String id = userProfileModelArrayList.get(0).getId();
+                                    String name = userProfileModelArrayList.get(0).getName();
+                                    String mobile = userProfileModelArrayList.get(0).getMobile_no();
+                                    String address = userProfileModelArrayList.get(0).getAddress();
+                                    String location = userProfileModelArrayList.get(0).getLocation_id();
+                                    String route = userProfileModelArrayList.get(0).getRoute_id();
 
                                     SharedLoginUtils.putLoginSharedUtils(SignUpActivity.this);
-                                    SharedLoginUtils.addUserId(SignUpActivity.this,id,name,mobile,address,location,route);
-                                    SuccessDialog successDialog=new SuccessDialog(SignUpActivity.this);
+                                    SharedLoginUtils.addUserId(SignUpActivity.this, id, name, mobile, address, location, route);
+                                    SuccessDialog successDialog = new SuccessDialog(SignUpActivity.this);
                                     successDialog.showDialog("Your Registration Successfully");
 
-                                   Handler handler = new Handler();
+                                    Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -341,7 +341,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
 
                             } else {
-                                ErrorDialog errorDialog=new ErrorDialog(SignUpActivity.this);
+                                ErrorDialog errorDialog = new ErrorDialog(SignUpActivity.this);
                                 errorDialog.showDialog(message);
                             }
 
@@ -355,6 +355,7 @@ public class SignUpActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(Call<SuccessModel> call, Throwable t) {
                 showProgressDialog.dismissDialog();
