@@ -34,7 +34,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -241,5 +242,13 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:id="@+id/iv_no_data_found"
+        android:src="@drawable/no_data_found"/>
 
 </LinearLayout>

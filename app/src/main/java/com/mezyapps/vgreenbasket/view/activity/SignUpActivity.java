@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -56,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ShowProgressDialog showProgressDialog;
 
     /*Spinner Array Adapter*/
-    ArrayAdapter spinnerRouteArrayAdapter,spinnerLocationArrayAdapter;
+    ArrayAdapter spinnerRouteArrayAdapter, spinnerLocationArrayAdapter;
 
 
     @Override
@@ -148,6 +151,23 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        textPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (validation()) {
+                        if (NetworkUtils.isNetworkAvailable(SignUpActivity.this)) {
+                            callSignup();
+                        } else {
+                            NetworkUtils.isNetworkNotAvailable(SignUpActivity.this);
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     private boolean validation() {
@@ -209,13 +229,11 @@ public class SignUpActivity extends AppCompatActivity {
                                     for (LocationModel locationModel : locationModelArrayList) {
                                         location_string_arrayList.add(locationModel.getLocation_name());
                                     }
-                                    spinnerLocationArrayAdapter=new ArrayAdapter(SignUpActivity.this, android.R.layout.simple_spinner_item, location_string_arrayList);
+                                    spinnerLocationArrayAdapter = new ArrayAdapter(SignUpActivity.this, android.R.layout.simple_spinner_item, location_string_arrayList);
                                     spinnerLocationArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     SpinnerLocation.setAdapter(spinnerLocationArrayAdapter);
                                     spinnerLocationArrayAdapter.notifyDataSetChanged();
-                                }
-                                else
-                                {
+                                } else {
                                     spinnerLocationArrayAdapter.notifyDataSetChanged();
                                 }
 

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -35,6 +37,8 @@ public class ChangePasswordFragment extends Fragment {
     private ShowProgressDialog showProgressDialog;
     private String user_id, password, confirm_password;
     public static ApiInterface apiInterface;
+    private ImageView iv_no_data_found;
+    private LinearLayout ll_change_password;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,9 +55,17 @@ public class ChangePasswordFragment extends Fragment {
         edit_password = view.findViewById(R.id.edit_password);
         btn_update = view.findViewById(R.id.btn_update);
         edit_confirm_password = view.findViewById(R.id.edit_confirm_password);
+        iv_no_data_found= view.findViewById(R.id.iv_no_data_found);
+        ll_change_password= view.findViewById(R.id.ll_change_password);
         showProgressDialog = new ShowProgressDialog(mContext);
-
         user_id = SharedLoginUtils.getUserId(mContext);
+
+        if (user_id.equalsIgnoreCase(""))
+        {
+            iv_no_data_found.setVisibility(View.VISIBLE);
+            ll_change_password.setVisibility(View.GONE);
+        }
+
     }
 
     private void events() {
