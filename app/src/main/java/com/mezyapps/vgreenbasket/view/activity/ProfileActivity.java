@@ -47,9 +47,12 @@ public class ProfileActivity extends AppCompatActivity {
     //Spinner Location
     private ArrayList<LocationModel> locationModelArrayList = new ArrayList<>();
     private ArrayList<String> location_string_arrayList = new ArrayList<>();
+    private ArrayList<String> location_string_arrayListID = new ArrayList<>();
+
     //Spinner Location
     private ArrayList<RouteModel> routeModelArrayList = new ArrayList<>();
     private ArrayList<String> route_string_arrayList = new ArrayList<>();
+    private ArrayList<String> route_string_arrayListID = new ArrayList<>();
     private Button btn_chang_profile;
     private String name, address, mobile;
     private ShowProgressDialog showProgressDialog;
@@ -103,14 +106,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 try {
-                    if (localtionTouch) {
                         int location_int = Integer.parseInt(locationModelArrayList.get(position).getId());
                         location_id = String.valueOf(location_int);
                         if (NetworkUtils.isNetworkAvailable(ProfileActivity.this)) {
                             callRouteList(location_id);
                         } else {
                             NetworkUtils.isNetworkNotAvailable(ProfileActivity.this);
-                        }
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -127,10 +129,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 try {
-                    if (routeTouch) {
-                        int route_id_int = Integer.parseInt(routeModelArrayList.get(position).getRoute_id());
-                        route_id = String.valueOf(route_id_int);
-                    }
+
+                    int route_id_int = Integer.parseInt(routeModelArrayList.get(position).getRoute_id());
+                    route_id = String.valueOf(route_id_int);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -151,20 +153,6 @@ public class ProfileActivity extends AppCompatActivity {
                         NetworkUtils.isNetworkNotAvailable(ProfileActivity.this);
                     }
                 }
-            }
-        });
-        SpinnerLocation.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                localtionTouch = true;
-                return false;
-            }
-        });
-        SpinnerRoute.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                routeTouch = true;
-                return false;
             }
         });
     }
@@ -297,10 +285,12 @@ public class ProfileActivity extends AppCompatActivity {
                                 locationModelArrayList = successModule.getLocationModelArrayList();
                                 if (locationModelArrayList.size() != 0) {
                                     location_string_arrayList.clear();
-                                    int index = locationModelArrayList.indexOf(location);
+                                    location_string_arrayListID.clear();
                                     for (LocationModel locationModel : locationModelArrayList) {
                                         location_string_arrayList.add(locationModel.getLocation_name());
+                                        location_string_arrayListID.add(locationModel.getId());
                                     }
+                                    int index = location_string_arrayListID.indexOf(location);
                                     spinnerLocationArrayAdapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_spinner_item, location_string_arrayList);
                                     spinnerLocationArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     SpinnerLocation.setAdapter(spinnerLocationArrayAdapter);
@@ -350,10 +340,12 @@ public class ProfileActivity extends AppCompatActivity {
                                 routeModelArrayList = successModule.getRouteModelArrayList();
                                 if (routeModelArrayList.size() != 0) {
                                     route_string_arrayList.clear();
-                                    int index = locationModelArrayList.indexOf(route);
+                                    route_string_arrayListID.clear();
                                     for (RouteModel routeModel : routeModelArrayList) {
                                         route_string_arrayList.add(routeModel.getRoute_name());
+                                        route_string_arrayListID.add(routeModel.getRoute_id());
                                     }
+                                    int index = route_string_arrayListID.indexOf(route);
                                     spinnerRouteArrayAdapter = new ArrayAdapter(ProfileActivity.this, android.R.layout.simple_spinner_item, route_string_arrayList);
                                     spinnerRouteArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                     SpinnerRoute.setAdapter(spinnerRouteArrayAdapter);

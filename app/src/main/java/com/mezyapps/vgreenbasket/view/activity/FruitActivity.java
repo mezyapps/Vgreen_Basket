@@ -125,7 +125,9 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                productListAdapter.getFilter().filter(edit_search.getText().toString().trim());
+                if(productListModelArrayList.size()!=0) {
+                    productListAdapter.getFilter().filter(edit_search.getText().toString().trim());
+                }
             }
 
             @Override

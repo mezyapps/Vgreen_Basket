@@ -34,16 +34,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OrderHistoryActivity extends AppCompatActivity {
-    private ImageView iv_back,iv_no_data_found,iv_back_search,iv_search,iv_close;
+    private ImageView iv_back, iv_no_data_found, iv_back_search, iv_search, iv_close;
     private RecyclerView recyclerView_order_history;
-    private ArrayList<OrderHistoryModel> orderHistoryModelArrayList=new ArrayList<>();
+    private ArrayList<OrderHistoryModel> orderHistoryModelArrayList = new ArrayList<>();
     public static ApiInterface apiInterface;
     private ShowProgressDialog showProgressDialog;
     private String user_id;
     private OrderHistoryAdapter orderHistoryAdapter;
-    private RelativeLayout rr_toolbar,rr_toolbar_search;
+    private RelativeLayout rr_toolbar, rr_toolbar_search;
     private EditText edit_search;
-
 
 
     @Override
@@ -57,7 +56,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     private void find_View_IDS() {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        showProgressDialog=new ShowProgressDialog(OrderHistoryActivity.this);
+        showProgressDialog = new ShowProgressDialog(OrderHistoryActivity.this);
         iv_back = findViewById(R.id.iv_back);
         iv_no_data_found = findViewById(R.id.iv_no_data_found);
         recyclerView_order_history = findViewById(R.id.recyclerView_order_history);
@@ -68,9 +67,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
         iv_close = findViewById(R.id.iv_close);
         edit_search = findViewById(R.id.edit_search);
 
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(OrderHistoryActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OrderHistoryActivity.this);
         recyclerView_order_history.setLayoutManager(linearLayoutManager);
-        user_id= SharedLoginUtils.getUserId(OrderHistoryActivity.this);
+        user_id = SharedLoginUtils.getUserId(OrderHistoryActivity.this);
 
         if (NetworkUtils.isNetworkAvailable(OrderHistoryActivity.this)) {
             callOrderHistory();
@@ -118,7 +117,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                orderHistoryAdapter.getFilter().filter(edit_search.getText().toString().trim());
+                if (orderHistoryModelArrayList.size() != 0) {
+                    orderHistoryAdapter.getFilter().filter(edit_search.getText().toString().trim());
+                }
             }
 
             @Override
@@ -127,6 +128,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
             }
         });
     }
+
     private void callOrderHistory() {
         showProgressDialog.showDialog();
         Call<SuccessModel> call = apiInterface.orderHistoryHD(user_id);
@@ -145,17 +147,15 @@ public class OrderHistoryActivity extends AppCompatActivity {
                         if (successModule != null) {
                             code = successModule.getCode();
                             if (code.equalsIgnoreCase("1")) {
-                                orderHistoryModelArrayList=successModule.getOrderHistoryModelArrayList();
-                                if(orderHistoryModelArrayList.size()!=0) {
+                                orderHistoryModelArrayList = successModule.getOrderHistoryModelArrayList();
+                                if (orderHistoryModelArrayList.size() != 0) {
                                     Collections.reverse(orderHistoryModelArrayList);
-                                    orderHistoryAdapter=new OrderHistoryAdapter(OrderHistoryActivity.this,orderHistoryModelArrayList);
+                                    orderHistoryAdapter = new OrderHistoryAdapter(OrderHistoryActivity.this, orderHistoryModelArrayList);
                                     iv_no_data_found.setVisibility(View.GONE);
                                     recyclerView_order_history.setVisibility(View.VISIBLE);
                                     recyclerView_order_history.setAdapter(orderHistoryAdapter);
                                     orderHistoryAdapter.notifyDataSetChanged();
-                                }
-                                else
-                                {
+                                } else {
                                     iv_no_data_found.setVisibility(View.VISIBLE);
                                     recyclerView_order_history.setVisibility(View.GONE);
                                     orderHistoryAdapter.notifyDataSetChanged();

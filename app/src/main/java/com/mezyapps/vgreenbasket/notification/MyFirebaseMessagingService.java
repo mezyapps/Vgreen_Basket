@@ -8,9 +8,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -54,13 +57,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         mContext = this;
-
-
-        String title = null, description = null,image=null;
-
+        String title = null, description = null;
         description=remoteMessage.getNotification().getBody();
         title=remoteMessage.getNotification().getTitle();
-        image=remoteMessage.getNotification().getIcon();
 
 
         sendNotification(title, description);
@@ -84,11 +83,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
-        //PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        //RemoteViews notificationSmall = new RemoteViews(getPackageName(), R.layout.notificaton_small);
-        //RemoteViews notificationBig = new RemoteViews(getPackageName(), R.layout.notificaton_big);
-
 
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -115,12 +109,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setupChannels() {
-
         NotificationChannel adminChannel;
         adminChannel = new NotificationChannel(CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", NotificationManager.IMPORTANCE_LOW);
         adminChannel.enableLights(true);
         adminChannel.setLightColor(Color.RED);
         adminChannel.enableVibration(true);
+
+
         builder.setChannelId(CHANNEL_ID);
 
         if (notificationManager != null) {
