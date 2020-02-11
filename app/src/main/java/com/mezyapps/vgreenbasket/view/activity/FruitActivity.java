@@ -49,6 +49,7 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
     private EditText edit_search;
     private TextView textCardCnt;
     private RelativeLayout rr_cart;
+    private ImageView iv_no_data_found;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
         iv_basket=findViewById(R.id.iv_basket);
         textCardCnt=findViewById(R.id.textCardCnt);
         rr_cart = findViewById(R.id.rr_cart);
+        iv_no_data_found = findViewById(R.id.iv_no_data_found);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(FruitActivity.this);
         recyclerView_Fruit.setLayoutManager(linearLayoutManager);
 
@@ -166,6 +168,7 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
 
                                 productListModelArrayList=successModule.getProductListModelArrayList();
                                 if(productListModelArrayList.size()!=0) {
+                                    iv_no_data_found.setVisibility(View.GONE);
                                     Collections.reverse(productListModelArrayList);
                                     productListAdapter=new ProductListAdapter(FruitActivity.this,productListModelArrayList,folder,FruitActivity.this);
                                     recyclerView_Fruit.setAdapter(productListAdapter);
@@ -173,11 +176,11 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
                                 }
                                 else
                                 {
-                                    // text_view_empty.setVisibility(View.VISIBLE);
+                                    iv_no_data_found.setVisibility(View.VISIBLE);
                                     productListAdapter.notifyDataSetChanged();
                                 }
                             } else {
-                                // text_view_empty.setVisibility(View.VISIBLE);
+                                iv_no_data_found.setVisibility(View.VISIBLE);
                                 productListAdapter.notifyDataSetChanged();
                             }
                         } else {

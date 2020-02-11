@@ -94,7 +94,10 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
             public void onClick(View v) {
                 long qtyVal = qty - 1;
                 if (qtyVal == 0) {
-                    Toast.makeText(mContext, "Less Then 1 Qty Not Allow", Toast.LENGTH_SHORT).show();
+                    cardProductModelArrayList.remove(position);
+                    appDatabase.getProductDAO().deleteProduct(cardProductModel);
+                    notifyDataSetChanged();
+                    referenceCardUiInterface.reference();
                 } else {
                     cardProductModel.setProduct_id(product_id);
                     cardProductModel.setProduct_name(cardProductModel.getProduct_name());

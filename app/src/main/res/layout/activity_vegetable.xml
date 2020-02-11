@@ -8,27 +8,27 @@
     tools:context=".view.activity.VegetableActivity">
 
     <RelativeLayout
+        android:id="@+id/rr_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/app_color"
-        android:id="@+id/rr_toolbar">
+        android:background="@color/app_color">
 
         <ImageView
+            android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_vector_back"
             android:padding="5dp"
-            android:id="@+id/iv_back"/>
+            android:src="@drawable/ic_vector_back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/vegetable_list"
             android:layout_centerVertical="true"
-            android:textStyle="bold"
+            android:layout_toEndOf="@+id/iv_back"
+            android:text="@string/vegetable_list"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:layout_toEndOf="@+id/iv_back"/>
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/rr_cart"
@@ -41,21 +41,21 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/iv_basket"
                 android:layout_marginStart="-8dp"
                 android:layout_marginTop="10dp"
-                android:elevation="1dp"
-                android:background="@drawable/shape_circle_cart">
+                android:layout_toEndOf="@+id/iv_basket"
+                android:background="@drawable/shape_circle_cart"
+                android:elevation="1dp">
 
                 <TextView
+                    android:id="@+id/textCardCnt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="0"
+                    android:layout_centerHorizontal="true"
                     android:maxLength="2"
-                    android:id="@+id/textCardCnt"
-                    android:textColor="@color/white"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="0"
+                    android:textColor="@color/white" />
 
 
             </RelativeLayout>
@@ -71,51 +71,50 @@
 
 
         <ImageView
+            android:id="@+id/iv_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="5dp"
-            android:id="@+id/iv_search"
-            android:layout_marginEnd="10dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_vector_search"/>
+            android:layout_marginEnd="10dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_vector_search" />
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rr_toolbar_search"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/light_gray"
-        android:visibility="gone"
-        android:id="@+id/rr_toolbar_search">
+        android:visibility="gone">
 
         <ImageView
+            android:id="@+id/iv_back_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_arrow_back"
             android:padding="5dp"
-            android:id="@+id/iv_back_search"/>
+            android:src="@drawable/ic_arrow_back" />
 
 
         <EditText
+            android:id="@+id/edit_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="@string/search_product"
-            android:id="@+id/edit_search"
-            android:inputType="text"
-            android:background="@color/light_gray"
-            android:textColor="@color/dark_gray"
             android:layout_alignRight="@+id/iv_close"
-            android:layout_toEndOf="@id/iv_back_search" />
+            android:layout_toEndOf="@id/iv_back_search"
+            android:background="@color/light_gray"
+            android:hint="@string/search_product"
+            android:inputType="text"
+            android:textColor="@color/dark_gray" />
 
 
         <ImageView
+            android:id="@+id/iv_close"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_vector_close"
-            android:padding="5dp"
             android:layout_alignParentEnd="true"
-            android:id="@+id/iv_close"/>
-
+            android:padding="5dp"
+            android:src="@drawable/ic_vector_close" />
 
 
     </RelativeLayout>
@@ -124,10 +123,89 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyclerView_Vegetable"/>
+            android:layout_above="@+id/ll_price_bottom">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_Vegetable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <ImageView
+                android:id="@+id/iv_no_data_found"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/no_data_found"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_price_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:background="@color/card_bottom"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+
+                <TextView
+                    android:id="@+id/textTotalAmt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textTotalSavedAmt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/app_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+
+                <Button
+                    android:id="@+id/btn_checkout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_chackout"
+                    android:text="@string/checkout"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
 
     </RelativeLayout>

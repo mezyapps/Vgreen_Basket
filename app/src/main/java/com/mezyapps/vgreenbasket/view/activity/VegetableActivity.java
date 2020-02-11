@@ -11,8 +11,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,7 @@ import retrofit2.Response;
 
 public class VegetableActivity extends AppCompatActivity implements ReferenceCardUiInterface {
 
-    private ImageView iv_back,iv_close,iv_search,iv_back_search,iv_basket;
+    private ImageView iv_back,iv_close,iv_search,iv_back_search,iv_basket,iv_no_data_found;
     private RecyclerView recyclerView_Vegetable;
     public static ApiInterface apiInterface;
     private ShowProgressDialog showProgressDialog;
@@ -48,8 +50,11 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
     private ProductListAdapter productListAdapter;
     private RelativeLayout rr_toolbar,rr_toolbar_search;
     private EditText edit_search;
-    private TextView textCardCnt;
+    private TextView textCardCnt,textTotalAmt,textTotalSavedAmt;
     private RelativeLayout rr_cart;
+    private LinearLayout ll_price_bottom;
+    private Button btn_checkout;
+    private  AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
     }
 
     private void find_View_IDS() {
+        appDatabase= AppDatabase.getInStatce(VegetableActivity.this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         showProgressDialog = new ShowProgressDialog(VegetableActivity.this);
         iv_back=findViewById(R.id.iv_back);
@@ -73,7 +79,15 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
         rr_toolbar_search = findViewById(R.id.rr_toolbar_search);
         textCardCnt = findViewById(R.id.textCardCnt);
         rr_cart = findViewById(R.id.rr_cart);
+        iv_no_data_found = findViewById(R.id.iv_no_data_found);
         recyclerView_Vegetable=findViewById(R.id.recyclerView_Vegetable);
+        ll_price_bottom=findViewById(R.id.ll_price_bottom);
+        textTotalAmt=findViewById(R.id.textTotalAmt);
+        textTotalSavedAmt=findViewById(R.id.textTotalSavedAmt);
+        textTotalSavedAmt=findViewById(R.id.textTotalSavedAmt);
+        btn_checkout=findViewById(R.id.btn_checkout);
+
+
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(VegetableActivity.this);
         recyclerView_Vegetable.setLayoutManager(linearLayoutManager);
 
@@ -165,6 +179,7 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
 
                                 productListModelArrayList=successModule.getProductListModelArrayList();
                                 if(productListModelArrayList.size()!=0) {
+                                    iv_no_data_found.setVisibility(View.GONE);
                                     Collections.reverse(productListModelArrayList);
                                     productListAdapter=new ProductListAdapter(VegetableActivity.this,productListModelArrayList,folder,VegetableActivity.this);
                                     recyclerView_Vegetable.setAdapter(productListAdapter);
@@ -172,11 +187,11 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
                                 }
                                 else
                                 {
-                                    // text_view_empty.setVisibility(View.VISIBLE);
+                                    iv_no_data_found.setVisibility(View.VISIBLE);
                                     productListAdapter.notifyDataSetChanged();
                                 }
                             } else {
-                                // text_view_empty.setVisibility(View.VISIBLE);
+                                iv_no_data_found.setVisibility(View.VISIBLE);
                                 productListAdapter.notifyDataSetChanged();
                             }
                         } else {
@@ -209,10 +224,22 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
 
     public int cartCount() {
         ArrayList<CardProductModel> cardProductModelArrayList=new ArrayList<>();
-        AppDatabase appDatabase;
-        appDatabase= appDatabase= AppDatabase.getInStatce(VegetableActivity.this);
         cardProductModelArrayList.clear();
+
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
+
+      /*  long total_rate = 0,total_saved=0,total_saved_mrp=0;
+        for (int i=0;i<cardProductModelArrayList.size();i++)
+        {
+            long total_mrp=cardProductModelArrayList.get(i).getMrp_total();
+            long total_price=cardProductModelArrayList.get(i).getPrice_total();
+            total_rate=total_rate+total_price;
+            total_saved=total_saved+total_mrp;
+        }
+        total_saved_mrp=total_saved-total_rate;
+        textTotalAmt.setText("Rs "+total_rate);
+        textTotalSavedAmt.setText("Saved RS "+total_saved_mrp);*/
+
         int size=cardProductModelArrayList.size();
         return size;
     }

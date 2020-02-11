@@ -131,6 +131,14 @@
             android:layout_height="match_parent"
             android:id="@+id/recyclerView_Fruit"/>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/no_data_found"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:id="@+id/iv_no_data_found"/>
+
     </RelativeLayout>
 
 
