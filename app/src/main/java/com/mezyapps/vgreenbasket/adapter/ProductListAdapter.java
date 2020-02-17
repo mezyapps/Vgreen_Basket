@@ -46,6 +46,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     int SpinnerPosition;
     final AppDatabase appDatabase;
     private ReferenceCardUiInterface referenceCardUiInterface;
+    private CardProductModel cardProductModel;
 
     public ProductListAdapter(Context mContext, ArrayList<ProductListModel> productListDashboardModelArrayList, String folder, ReferenceCardUiInterface referenceCardUiInterface) {
         this.mContext = mContext;
@@ -137,9 +138,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.ll_add_qty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cardProductModel = appDatabase.getProductDAO().getProduct(Long.parseLong(product_id));
                 String qty = String.valueOf(holder.textQty.getText());
-                long qtyVal = Long.parseLong(qty) + 1;
-                long idVal = appDatabase.getProductDAO().getProductQtyUpdate(qtyVal, Long.parseLong(product_id));
+                long qtyVal = cardProductModel.getQty() + 1;
+                long card_prod_id = cardProductModel.getProduct_id();
+                long mrpTotal = qtyVal * cardProductModel.getMrp();
+                long totalRate = qtyVal * cardProductModel.getPrice();
+                long idVal = appDatabase.getProductDAO().getProductDataUpdate(qtyVal, card_prod_id, totalRate, mrpTotal);
+                callQtyAdd(holder, product_id);
                 notifyDataSetChanged();
                 referenceCardUiInterface.reference();
             }
@@ -147,24 +153,28 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.ll_remove_qty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String qty = String.valueOf(holder.textQty.getText());
-                long qtyVal = Long.parseLong(qty) - 1;
-                if (qtyVal == 0) {
+                cardProductModel = appDatabase.getProductDAO().getProduct(Long.parseLong(product_id));
+                long qty = cardProductModel.getQty() - 1;
+                if (qty == 0) {
                     appDatabase.getProductDAO().deleteAllProductID(Long.parseLong(product_id));
                     callQtyAdd(holder, product_id);
                     notifyDataSetChanged();
                 } else {
-                    long idVal = appDatabase.getProductDAO().getProductQtyUpdate(qtyVal, Long.parseLong(product_id));
+                    long card_produt_id = cardProductModel.getProduct_id();
+                    long mrpTotal = qty * cardProductModel.getMrp();
+                    long totalRate = qty * cardProductModel.getPrice();
+                    long idVal = appDatabase.getProductDAO().getProductDataUpdate(qty, card_produt_id, totalRate, mrpTotal);
                     notifyDataSetChanged();
                 }
                 referenceCardUiInterface.reference();
+
 
             }
         });
     }
 
     private void callQtyAdd(MyViewHolder holder, String product_id) {
-        CardProductModel cardProductModel = appDatabase.getProductDAO().getProduct(Long.parseLong(product_id));
+        cardProductModel = appDatabase.getProductDAO().getProduct(Long.parseLong(product_id));
         final long qty;
         if (cardProductModel != null) {
             qty = cardProductModel.getQty();

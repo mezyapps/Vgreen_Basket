@@ -100,6 +100,13 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
         long total_rate = 0,total_saved=0,total_saved_mrp=0;
 
+        if (cardProductModelArrayList.size()==0)
+        {
+            ll_cart_bottom.setVisibility(View.GONE);
+            iv_no_data_found.setVisibility(View.VISIBLE);
+            ll_recyclerView_Card.setVisibility(View.GONE);
+        }
+
         for (int i=0;i<cardProductModelArrayList.size();i++)
         {
             long total_mrp=cardProductModelArrayList.get(i).getMrp_total();

@@ -42,19 +42,20 @@ import retrofit2.Response;
 
 public class VegetableActivity extends AppCompatActivity implements ReferenceCardUiInterface {
 
-    private ImageView iv_back,iv_close,iv_search,iv_back_search,iv_basket,iv_no_data_found;
+    private ImageView iv_back, iv_close, iv_search, iv_back_search, iv_basket, iv_no_data_found;
     private RecyclerView recyclerView_Vegetable;
     public static ApiInterface apiInterface;
     private ShowProgressDialog showProgressDialog;
-    private ArrayList<ProductListModel> productListModelArrayList=new ArrayList<>();
+    private ArrayList<ProductListModel> productListModelArrayList = new ArrayList<>();
     private ProductListAdapter productListAdapter;
-    private RelativeLayout rr_toolbar,rr_toolbar_search;
+    private RelativeLayout rr_toolbar, rr_toolbar_search;
     private EditText edit_search;
-    private TextView textCardCnt,textTotalAmt,textTotalSavedAmt;
+    private TextView textCardCnt, textTotalAmt, textTotalSavedAmt;
     private RelativeLayout rr_cart;
     private LinearLayout ll_price_bottom;
     private Button btn_checkout;
-    private  AppDatabase appDatabase;
+    private AppDatabase appDatabase;
+    ArrayList<CardProductModel> cardProductModelArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +67,13 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
     }
 
     private void find_View_IDS() {
-        appDatabase= AppDatabase.getInStatce(VegetableActivity.this);
+        appDatabase = AppDatabase.getInStatce(VegetableActivity.this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         showProgressDialog = new ShowProgressDialog(VegetableActivity.this);
-        iv_back=findViewById(R.id.iv_back);
-        iv_close=findViewById(R.id.iv_close);
-        iv_search=findViewById(R.id.iv_search);
-        edit_search=findViewById(R.id.edit_search);
+        iv_back = findViewById(R.id.iv_back);
+        iv_close = findViewById(R.id.iv_close);
+        iv_search = findViewById(R.id.iv_search);
+        edit_search = findViewById(R.id.edit_search);
         rr_toolbar = findViewById(R.id.rr_toolbar);
         iv_back_search = findViewById(R.id.iv_back_search);
         iv_basket = findViewById(R.id.iv_basket);
@@ -80,15 +81,15 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
         textCardCnt = findViewById(R.id.textCardCnt);
         rr_cart = findViewById(R.id.rr_cart);
         iv_no_data_found = findViewById(R.id.iv_no_data_found);
-        recyclerView_Vegetable=findViewById(R.id.recyclerView_Vegetable);
-        ll_price_bottom=findViewById(R.id.ll_price_bottom);
-        textTotalAmt=findViewById(R.id.textTotalAmt);
-        textTotalSavedAmt=findViewById(R.id.textTotalSavedAmt);
-        textTotalSavedAmt=findViewById(R.id.textTotalSavedAmt);
-        btn_checkout=findViewById(R.id.btn_checkout);
+        recyclerView_Vegetable = findViewById(R.id.recyclerView_Vegetable);
+        ll_price_bottom = findViewById(R.id.ll_price_bottom);
+        textTotalAmt = findViewById(R.id.textTotalAmt);
+        textTotalSavedAmt = findViewById(R.id.textTotalSavedAmt);
+        textTotalSavedAmt = findViewById(R.id.textTotalSavedAmt);
+        btn_checkout = findViewById(R.id.btn_checkout);
 
 
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(VegetableActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(VegetableActivity.this);
         recyclerView_Vegetable.setLayoutManager(linearLayoutManager);
 
         if (NetworkUtils.isNetworkAvailable(VegetableActivity.this)) {
@@ -97,8 +98,9 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
             NetworkUtils.isNetworkNotAvailable(VegetableActivity.this);
         }
     }
+
     private void events() {
-        int size=cartCount();
+        int size = cartCount();
         textCardCnt.setText(String.valueOf(size));
 
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +140,7 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(productListModelArrayList.size()!=0) {
+                if (productListModelArrayList.size() != 0) {
                     productListAdapter.getFilter().filter(edit_search.getText().toString().trim());
                 }
             }
@@ -151,13 +153,21 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
         rr_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(VegetableActivity.this,CardActivity.class));
+                startActivity(new Intent(VegetableActivity.this, CardActivity.class));
+            }
+        });
+
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(VegetableActivity.this, PaymentDetialsActivity.class));
             }
         });
 
     }
+
     private void callProductList() {
-        String prod_id="2";
+        String prod_id = "2";
         showProgressDialog.showDialog();
         Call<SuccessModel> call = apiInterface.productList(prod_id);
         call.enqueue(new Callback<SuccessModel>() {
@@ -171,22 +181,25 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
                     if (response.isSuccessful()) {
                         SuccessModel successModule = response.body();
                         productListModelArrayList.clear();
-                        String message = null, code = null,folder;
+                        String message = null, code = null, folder;
                         if (successModule != null) {
                             code = successModule.getCode();
                             folder = successModule.getFolder();
                             if (code.equalsIgnoreCase("1")) {
 
-                                productListModelArrayList=successModule.getProductListModelArrayList();
-                                if(productListModelArrayList.size()!=0) {
+                                productListModelArrayList = successModule.getProductListModelArrayList();
+                                if (productListModelArrayList.size() != 0) {
                                     iv_no_data_found.setVisibility(View.GONE);
                                     Collections.reverse(productListModelArrayList);
-                                    productListAdapter=new ProductListAdapter(VegetableActivity.this,productListModelArrayList,folder,VegetableActivity.this);
+                                    productListAdapter = new ProductListAdapter(VegetableActivity.this, productListModelArrayList, folder, VegetableActivity.this);
                                     recyclerView_Vegetable.setAdapter(productListAdapter);
                                     productListAdapter.notifyDataSetChanged();
-                                }
-                                else
-                                {
+                                    if (cardProductModelArrayList.size() != 0) {
+                                        ll_price_bottom.setVisibility(View.VISIBLE);
+                                    } else {
+                                        ll_price_bottom.setVisibility(View.GONE);
+                                    }
+                                } else {
                                     iv_no_data_found.setVisibility(View.VISIBLE);
                                     productListAdapter.notifyDataSetChanged();
                                 }
@@ -218,35 +231,39 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
     protected void onRestart() {
         super.onRestart();
         callProductList();
-        int size=cartCount();
+        int size = cartCount();
         textCardCnt.setText(String.valueOf(size));
     }
 
     public int cartCount() {
-        ArrayList<CardProductModel> cardProductModelArrayList=new ArrayList<>();
         cardProductModelArrayList.clear();
 
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
 
-      /*  long total_rate = 0,total_saved=0,total_saved_mrp=0;
-        for (int i=0;i<cardProductModelArrayList.size();i++)
-        {
-            long total_mrp=cardProductModelArrayList.get(i).getMrp_total();
-            long total_price=cardProductModelArrayList.get(i).getPrice_total();
-            total_rate=total_rate+total_price;
-            total_saved=total_saved+total_mrp;
+        if (cardProductModelArrayList.size() != 0) {
+            ll_price_bottom.setVisibility(View.VISIBLE);
+        } else {
+            ll_price_bottom.setVisibility(View.GONE);
         }
-        total_saved_mrp=total_saved-total_rate;
-        textTotalAmt.setText("Rs "+total_rate);
-        textTotalSavedAmt.setText("Saved RS "+total_saved_mrp);*/
 
-        int size=cardProductModelArrayList.size();
+        long total_rate = 0, total_saved = 0, total_saved_mrp = 0;
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            long total_mrp = cardProductModelArrayList.get(i).getMrp_total();
+            long total_price = cardProductModelArrayList.get(i).getPrice_total();
+            total_rate = total_rate + total_price;
+            total_saved = total_saved + total_mrp;
+        }
+        total_saved_mrp = total_saved - total_rate;
+        textTotalAmt.setText("Rs " + total_rate);
+        textTotalSavedAmt.setText("Saved RS " + total_saved_mrp);
+
+        int size = cardProductModelArrayList.size();
         return size;
     }
 
     @Override
     public void reference() {
-        int size=cartCount();
+        int size = cartCount();
         textCardCnt.setText(String.valueOf(size));
     }
 

@@ -11,8 +11,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,9 +49,14 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
     private ProductListAdapter productListAdapter;
     private RelativeLayout rr_toolbar,rr_toolbar_search;
     private EditText edit_search;
-    private TextView textCardCnt;
+    private TextView textCardCnt, textTotalAmt, textTotalSavedAmt;
     private RelativeLayout rr_cart;
     private ImageView iv_no_data_found;
+    AppDatabase appDatabase;
+    private LinearLayout ll_price_bottom;
+    private Button btn_checkout;
+    ArrayList<CardProductModel> cardProductModelArrayList=new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,7 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
     }
 
     private void find_View_IDS() {
+        appDatabase= AppDatabase.getInStatce(FruitActivity.this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         showProgressDialog = new ShowProgressDialog(FruitActivity.this);
         iv_back=findViewById(R.id.iv_back);
@@ -75,6 +83,13 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
         textCardCnt=findViewById(R.id.textCardCnt);
         rr_cart = findViewById(R.id.rr_cart);
         iv_no_data_found = findViewById(R.id.iv_no_data_found);
+        ll_price_bottom = findViewById(R.id.ll_price_bottom);
+        textTotalAmt = findViewById(R.id.textTotalAmt);
+        textTotalSavedAmt = findViewById(R.id.textTotalSavedAmt);
+        textTotalSavedAmt = findViewById(R.id.textTotalSavedAmt);
+        btn_checkout = findViewById(R.id.btn_checkout);
+
+
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(FruitActivity.this);
         recyclerView_Fruit.setLayoutManager(linearLayoutManager);
 
@@ -143,6 +158,12 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
                 startActivity(new Intent(FruitActivity.this,CardActivity.class));
             }
         });
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             startActivity(new Intent(FruitActivity.this,PaymentDetialsActivity.class));
+            }
+        });
     }
 
     private void callProductList() {
@@ -173,6 +194,11 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
                                     productListAdapter=new ProductListAdapter(FruitActivity.this,productListModelArrayList,folder,FruitActivity.this);
                                     recyclerView_Fruit.setAdapter(productListAdapter);
                                     productListAdapter.notifyDataSetChanged();
+                                    if (cardProductModelArrayList.size() != 0) {
+                                        ll_price_bottom.setVisibility(View.VISIBLE);
+                                    } else {
+                                        ll_price_bottom.setVisibility(View.GONE);
+                                    }
                                 }
                                 else
                                 {
@@ -212,11 +238,26 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
         textCardCnt.setText(String.valueOf(size));
     }
     public int cartCount() {
-        ArrayList<CardProductModel> cardProductModelArrayList=new ArrayList<>();
-        AppDatabase appDatabase;
-        appDatabase= AppDatabase.getInStatce(FruitActivity.this);
         cardProductModelArrayList.clear();
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
+
+        if (cardProductModelArrayList.size() != 0) {
+            ll_price_bottom.setVisibility(View.VISIBLE);
+        } else {
+            ll_price_bottom.setVisibility(View.GONE);
+        }
+
+        long total_rate = 0, total_saved = 0, total_saved_mrp = 0;
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            long total_mrp = cardProductModelArrayList.get(i).getMrp_total();
+            long total_price = cardProductModelArrayList.get(i).getPrice_total();
+            total_rate = total_rate + total_price;
+            total_saved = total_saved + total_mrp;
+        }
+        total_saved_mrp = total_saved - total_rate;
+        textTotalAmt.setText("Rs " + total_rate);
+        textTotalSavedAmt.setText("Saved RS " + total_saved_mrp);
+
         int size=cardProductModelArrayList.size();
         return size;
     }
