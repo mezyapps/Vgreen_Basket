@@ -33,6 +33,9 @@ public interface CardAppDAO {
     @Query("select * from ProductTable where product_id ==:product_id")
     public CardProductModel getProduct(long product_id);
 
+    @Query("select * from ProductTable where product_id ==:product_id AND unit_id==:unit_id")
+    public CardProductModel getProductUnitID(long product_id,long unit_id);
+
     @Query("UPDATE ProductTable SET qty = :qty WHERE product_id = :product_id")
     public long getProductQtyUpdate(long qty,long product_id);
 

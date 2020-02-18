@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!user_id.equalsIgnoreCase("")) {
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(user_id);
                 }
+                appDatabase.getProductDAO().deleteAllProduct();
                 SharedLoginUtils.removeUserSharedUtils(MainActivity.this);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);

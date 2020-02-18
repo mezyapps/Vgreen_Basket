@@ -69,7 +69,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         final ProductListModel productListModel = productListDashboardModelArrayList.get(position);
         final String product_id = productListModel.getProd_id();
 
-        callQtyAdd(holder, product_id);
 
         final String imagePath = BaseApi.BASE_URL + folder + productListModel.getProd_image();
         Picasso.with(mContext).load(imagePath).into(holder.iv_product_image);
@@ -104,20 +103,32 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         }
 
+        callQtyAdd(holder, product_id);
+
         holder.spinnerUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 try {
                     SpinnerPosition = position;
                     final ProductUnitModel productUnitmodel = productListModel.getProductUnitModelArrayList().get(position);
-                    int product_id = Integer.parseInt(productUnitmodel.getId());
-                    String unit = productUnitmodel.getProd_unit() + " " + productUnitmodel.getProd_weight();
-                    String rate = "Rs " + productUnitmodel.getProd_rate();
-                    String mrp = "MRP " + productUnitmodel.getProd_mrp();
-                    holder.textUnitName.setText(unit);
-                    holder.textPrice.setText(rate);
-                    holder.textMrp.setText(mrp);
-                    holder.textMrp.setPaintFlags(holder.textMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    long product_id = Long.parseLong(productUnitmodel.getProd_id());
+                    long unit_id = Long.parseLong(productUnitmodel.getId());
+                    cardProductModel = appDatabase.getProductDAO().getProductUnitID(product_id, unit_id);
+                    if (cardProductModel != null) {
+                        String unit = productUnitmodel.getProd_unit() + " " + productUnitmodel.getProd_weight();
+                        holder.textUnitName.setText(unit);
+                        holder.ll_product_qty.setVisibility(View.VISIBLE);
+                        holder.ll_add_product.setVisibility(View.GONE);
+                        callQtyAdd(holder, String.valueOf(product_id));
+                    } else {
+                        String unit = productUnitmodel.getProd_unit() + " " + productUnitmodel.getProd_weight();
+                        String rate = "Rs " + productUnitmodel.getProd_rate();
+                        String mrp = "MRP " + productUnitmodel.getProd_mrp();
+                        holder.textUnitName.setText(unit);
+                        holder.textPrice.setText(rate);
+                        holder.textMrp.setText(mrp);
+                        holder.textMrp.setPaintFlags(holder.textMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -132,7 +143,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.ll_add_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddItem(position, productListModel);
+                AddItem(position, productListModel,holder);
             }
         });
         holder.ll_add_qty.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +157,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 long totalRate = qtyVal * cardProductModel.getPrice();
                 long idVal = appDatabase.getProductDAO().getProductDataUpdate(qtyVal, card_prod_id, totalRate, mrpTotal);
                 callQtyAdd(holder, product_id);
-                notifyDataSetChanged();
                 referenceCardUiInterface.reference();
             }
         });
@@ -164,7 +174,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                     long mrpTotal = qty * cardProductModel.getMrp();
                     long totalRate = qty * cardProductModel.getPrice();
                     long idVal = appDatabase.getProductDAO().getProductDataUpdate(qty, card_produt_id, totalRate, mrpTotal);
-                    notifyDataSetChanged();
+                    callQtyAdd(holder, product_id);
                 }
                 referenceCardUiInterface.reference();
 
@@ -181,13 +191,23 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             holder.ll_product_qty.setVisibility(View.VISIBLE);
             holder.ll_add_product.setVisibility(View.GONE);
             holder.textQty.setText(String.valueOf(qty));
+
+            long mrpTotal = qty * cardProductModel.getMrp();
+            long totalRate = qty * cardProductModel.getPrice();
+
+            String mrp = "Rs " + mrpTotal;
+            String rate = "MRP " + totalRate;
+            holder.textPrice.setText(rate);
+            holder.textMrp.setText(mrp);
+            holder.textMrp.setPaintFlags(holder.textMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
         } else {
             holder.ll_product_qty.setVisibility(View.GONE);
             holder.ll_add_product.setVisibility(View.VISIBLE);
         }
     }
 
-    private void AddItem(int position, ProductListModel productListModel) {
+    private void AddItem(int position, ProductListModel productListModel, MyViewHolder holder) {
         String productName = productListDashboardModelArrayList.get(position).getProd_name();
         long product_id = Long.parseLong(productListDashboardModelArrayList.get(position).getProd_id());
         if (productUnitModelArrayList.size() == 1) {
@@ -200,11 +220,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             long mrp = Long.parseLong(productUnitModel.getProd_mrp());
             long qty = Long.parseLong("1");
             long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, weight_id, mrp, mrp, rate, rate, qty, folder + productListModel.getProd_image()));
-            if (idVal != 0)
+            if (idVal != 0) {
                 Toast.makeText(mContext, productName + "Added  Into Card Successfully", Toast.LENGTH_SHORT).show();
+                holder.ll_product_qty.setVisibility(View.VISIBLE);
+                holder.ll_add_product.setVisibility(View.GONE);
+                holder.textQty.setText(String.valueOf(qty));
+            }
             else
                 Toast.makeText(mContext, productName + "Not Added", Toast.LENGTH_SHORT).show();
-            notifyDataSetChanged();
         } else {
             final ProductUnitModel productUnitModel = productListModel.getProductUnitModelArrayList().get(SpinnerPosition);
             long id = Long.parseLong(productUnitModel.getId());
@@ -215,11 +238,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             long mrp = Long.parseLong(productUnitModel.getProd_mrp());
             long qty = Long.parseLong("1");
             long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, weight_id, mrp, mrp, rate, rate, qty, folder + productListModel.getProd_image()));
-            if (idVal != 0)
+            if (idVal != 0) {
                 Toast.makeText(mContext, productName + "  Added  Into Card", Toast.LENGTH_SHORT).show();
+                holder.ll_product_qty.setVisibility(View.VISIBLE);
+                holder.ll_add_product.setVisibility(View.GONE);
+                holder.textQty.setText(String.valueOf(qty));
+            }
             else
-                Toast.makeText(mContext, productName + "  Not Added", Toast.LENGTH_SHORT).show();
-            notifyDataSetChanged();
+            Toast.makeText(mContext, productName + "  Not Added", Toast.LENGTH_SHORT).show();
         }
         referenceCardUiInterface.reference();
     }
