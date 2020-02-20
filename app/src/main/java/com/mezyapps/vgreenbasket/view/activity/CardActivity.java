@@ -57,7 +57,7 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
         productCardListAdpater=new ProductCardListAdpater(CardActivity.this,cardProductModelArrayList,this);
         recyclerView_Card.setAdapter(productCardListAdpater);
         productCardListAdpater.notifyDataSetChanged();
-        long total_rate = 0,total_saved=0,total_saved_mrp=0;
+        double total_rate = 0,total_saved=0,total_saved_mrp=0;
 
         if (cardProductModelArrayList.size()==0)
         {
@@ -68,8 +68,8 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
 
         for (int i=0;i<cardProductModelArrayList.size();i++)
         {
-            long total_mrp=cardProductModelArrayList.get(i).getMrp_total();
-            long total_price=cardProductModelArrayList.get(i).getPrice_total();
+            double total_mrp=cardProductModelArrayList.get(i).getMrp_total();
+            double total_price=cardProductModelArrayList.get(i).getPrice_total();
             total_rate=total_rate+total_price;
             total_saved=total_saved+total_mrp;
         }
@@ -98,7 +98,7 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
     public void reference() {
         cardProductModelArrayList.clear();
         cardProductModelArrayList.addAll(appDatabase.getProductDAO().getAppProduct());
-        long total_rate = 0,total_saved=0,total_saved_mrp=0;
+        double total_rate = 0,total_saved=0,total_saved_mrp=0;
 
         if (cardProductModelArrayList.size()==0)
         {
@@ -109,8 +109,8 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
 
         for (int i=0;i<cardProductModelArrayList.size();i++)
         {
-            long total_mrp=cardProductModelArrayList.get(i).getMrp_total();
-            long total_price=cardProductModelArrayList.get(i).getPrice_total();
+            double total_mrp=cardProductModelArrayList.get(i).getMrp_total();
+            double total_price=cardProductModelArrayList.get(i).getPrice_total();
             total_rate=total_rate+total_price;
             total_saved=total_saved+total_mrp;
         }

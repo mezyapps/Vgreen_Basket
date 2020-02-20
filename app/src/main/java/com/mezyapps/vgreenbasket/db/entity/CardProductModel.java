@@ -2,6 +2,7 @@ package com.mezyapps.vgreenbasket.db.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "ProductTable")
@@ -30,16 +31,16 @@ public class CardProductModel {
     private String weight_id;
 
     @ColumnInfo(name = "MRP")
-    private long mrp;
+    private double mrp;
 
     @ColumnInfo(name="MRP_TOTAL")
-    private long mrp_total;
+    private double mrp_total;
 
     @ColumnInfo(name="price")
-    private long price;
+    private double price;
 
     @ColumnInfo(name="price_TOTAl")
-    private long price_total;
+    private double price_total;
 
     @ColumnInfo(name = "qty")
     private long qty;
@@ -47,10 +48,11 @@ public class CardProductModel {
     @ColumnInfo(name = "imagepath")
     private String imagepath;
 
+    @Ignore
     public CardProductModel() {
     }
 
-    public CardProductModel(long id,long product_id, String product_name, long unit_id,long unit, String weight,String weight_id, long mrp, long mrp_total, long price, long price_total, long qty,String imagepath) {
+    public CardProductModel(long id,long product_id, String product_name, long unit_id,long unit, String weight,String weight_id, double mrp, double mrp_total, double price, double price_total, long qty,String imagepath) {
         this.id=id;
         this.product_id = product_id;
         this.product_name = product_name;
@@ -98,32 +100,36 @@ public class CardProductModel {
         this.weight = weight;
     }
 
-    public long getMrp() {
+    public double getMrp() {
         return mrp;
     }
 
-    public void setMrp(long mrp) {
+    public void setMrp(double mrp) {
         this.mrp = mrp;
     }
 
-    public long getMrp_total() {
+    public double getMrp_total() {
         return mrp_total;
     }
 
-    public void setMrp_total(long mrp_total) {
+    public void setMrp_total(double mrp_total) {
         this.mrp_total = mrp_total;
     }
 
-    public long getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public long getPrice_total() {
+    public double getPrice_total() {
         return price_total;
+    }
+
+    public void setPrice_total(double price_total) {
+        this.price_total = price_total;
     }
 
     public void setPrice_total(long price_total) {
@@ -169,4 +175,5 @@ public class CardProductModel {
     public void setWeight_id(String weight_id) {
         this.weight_id = weight_id;
     }
+
 }

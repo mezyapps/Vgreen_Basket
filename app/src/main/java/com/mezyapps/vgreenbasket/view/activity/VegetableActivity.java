@@ -246,10 +246,10 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
             ll_price_bottom.setVisibility(View.GONE);
         }
 
-        long total_rate = 0, total_saved = 0, total_saved_mrp = 0;
+        double total_rate = 0, total_saved = 0, total_saved_mrp = 0;
         for (int i = 0; i < cardProductModelArrayList.size(); i++) {
-            long total_mrp = cardProductModelArrayList.get(i).getMrp_total();
-            long total_price = cardProductModelArrayList.get(i).getPrice_total();
+            double total_mrp = cardProductModelArrayList.get(i).getMrp_total();
+            double total_price = cardProductModelArrayList.get(i).getPrice_total();
             total_rate = total_rate + total_price;
             total_saved = total_saved + total_mrp;
         }
