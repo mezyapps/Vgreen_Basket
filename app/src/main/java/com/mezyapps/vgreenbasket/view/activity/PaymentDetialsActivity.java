@@ -98,9 +98,9 @@ public class PaymentDetialsActivity extends AppCompatActivity {
             total_saved = total_saved + total_mrp;
         }
         total_saved_mrp = total_saved - total_rate;
-        String rate = "Amt To Pay Rs : " + total_rate;
-        String total_save = "Saved Rs : " + total_saved_mrp;
-        String total_mrp = "Total MRP : " + total_saved;
+        String rate = "Amt To Pay Rs : " + String.format("%.2f",total_rate);
+        String total_save = "Saved Rs : " + String.format("%.2f",total_saved_mrp);
+        String total_mrp = "Total MRP : " + String.format("%.2f",total_saved);
         textTotalMrp.setText(total_mrp);
         textTotalSavedAmt.setText(total_save);
         textTotalAmt.setText(rate);
@@ -178,7 +178,10 @@ public class PaymentDetialsActivity extends AppCompatActivity {
         JSONArray jsonArrayTotalMRP = getProductTotalMRP();
         JSONArray jsonArrayTotalPrice = getProductTotalPrice();
         JSONArray total_qty = getProductTotalQty();
-        Call<SuccessModel> call = apiInterface.callPlaceOrder(user_id, jsonArrayProductID, jsonArrayUnitID, jsonArrayWeight, jsonArrayTotalMRP, jsonArrayTotalPrice, total_qty, payment_type, isCheckAddress, other_address);
+        JSONArray jsonArrayMrp = getProductMrp();
+        JSONArray jsonArrayPrice = getProductRate();
+
+        Call<SuccessModel> call = apiInterface.callPlaceOrder(user_id, jsonArrayProductID, jsonArrayUnitID, jsonArrayWeight, jsonArrayTotalMRP, jsonArrayTotalPrice, total_qty, payment_type, isCheckAddress, other_address,jsonArrayMrp,jsonArrayPrice);
         call.enqueue(new Callback<SuccessModel>() {
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
@@ -275,7 +278,8 @@ public class PaymentDetialsActivity extends AppCompatActivity {
     private JSONArray getProductTotalMRP() {
         List<String> ppList = new ArrayList<>();
         for (int i = 0; i < cardProductModelArrayList.size(); i++) {
-            ppList.add(String.valueOf(cardProductModelArrayList.get(i).getMrp_total()));
+            ppList.add(String.format("%.2f",cardProductModelArrayList.get(i).getMrp_total()));
+
         }
         JSONArray ppJsonArray = new JSONArray(ppList);
         return ppJsonArray;
@@ -284,7 +288,7 @@ public class PaymentDetialsActivity extends AppCompatActivity {
     private JSONArray getProductTotalPrice() {
         List<String> ppList = new ArrayList<>();
         for (int i = 0; i < cardProductModelArrayList.size(); i++) {
-            ppList.add(String.valueOf(cardProductModelArrayList.get(i).getPrice_total()));
+            ppList.add(String.format("%.2f",cardProductModelArrayList.get(i).getPrice_total()));
         }
         JSONArray ppJsonArray = new JSONArray(ppList);
         return ppJsonArray;
@@ -294,6 +298,24 @@ public class PaymentDetialsActivity extends AppCompatActivity {
         List<String> ppList = new ArrayList<>();
         for (int i = 0; i < cardProductModelArrayList.size(); i++) {
             ppList.add(String.valueOf(cardProductModelArrayList.get(i).getQty()));
+        }
+        JSONArray ppJsonArray = new JSONArray(ppList);
+        return ppJsonArray;
+    }
+
+    private JSONArray getProductMrp() {
+        List<String> ppList = new ArrayList<>();
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            ppList.add(String.format("%.2f",cardProductModelArrayList.get(i).getMrp()));
+        }
+        JSONArray ppJsonArray = new JSONArray(ppList);
+        return ppJsonArray;
+    }
+
+    private JSONArray getProductRate() {
+        List<String> ppList = new ArrayList<>();
+        for (int i = 0; i < cardProductModelArrayList.size(); i++) {
+            ppList.add(String.format("%.2f",cardProductModelArrayList.get(i).getPrice()));
         }
         JSONArray ppJsonArray = new JSONArray(ppList);
         return ppJsonArray;

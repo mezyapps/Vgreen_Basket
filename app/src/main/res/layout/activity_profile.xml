@@ -186,7 +186,7 @@
                         android:id="@+id/SpinnerLocation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dialog"/>
                 </LinearLayout>
 
 
@@ -219,7 +219,7 @@
                         android:id="@+id/SpinnerRoute"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dialog" />
                 </LinearLayout>
 
 

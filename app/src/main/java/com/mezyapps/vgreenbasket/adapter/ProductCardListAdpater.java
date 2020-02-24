@@ -55,10 +55,10 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
 
         final long qty = cardProductModel.getQty();
         String unit = cardProductModel.getUnit() + " " + cardProductModel.getWeight();
-        double mrpTotal = qty * cardProductModel.getMrp_total();
-        double totalRate = qty * cardProductModel.getPrice_total();
-        String rate = "Rs " + cardProductModel.getPrice_total();
-        String mrp = "Rs " + cardProductModel.getMrp_total() + " ";
+        double mrpTotal = qty * Double.parseDouble(String.format("%.2f", cardProductModel.getMrp()));
+        double totalRate = qty * Double.parseDouble(String.format("%.2f", cardProductModel.getPrice()));
+        String rate = "Rs " +String.format("%.2f", cardProductModel.getPrice_total());
+        String mrp = "MRP "+String.format("%.2f", cardProductModel.getMrp_total());
         holder.textUnitName.setText(unit);
         holder.textMrp.setText(mrp);
         holder.textProductName.setText(cardProductModel.getProduct_name());
@@ -76,8 +76,8 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
                 cardProductModel.setWeight(cardProductModel.getWeight());
                 cardProductModel.setPrice(cardProductModel.getPrice());
                 cardProductModel.setMrp(cardProductModel.getMrp());
-                double mrpTotal = qtyVal * cardProductModel.getMrp();
-                double totalRate = qtyVal * cardProductModel.getPrice();
+                double mrpTotal = qtyVal * Double.parseDouble(String.format("%.2f", cardProductModel.getMrp()));
+                double totalRate = qtyVal * Double.parseDouble(String.format("%.2f", cardProductModel.getPrice()));
                 cardProductModel.setMrp_total(mrpTotal);
                 cardProductModel.setPrice_total(totalRate);
                 cardProductModel.setQty(qtyVal);
@@ -105,8 +105,8 @@ public class ProductCardListAdpater extends RecyclerView.Adapter<ProductCardList
                     cardProductModel.setWeight(cardProductModel.getWeight());
                     cardProductModel.setPrice(cardProductModel.getPrice());
                     cardProductModel.setMrp(cardProductModel.getMrp());
-                    double mrpTotal = qtyVal * cardProductModel.getMrp();
-                    double totalRate = qtyVal * cardProductModel.getPrice();
+                    double mrpTotal = qtyVal * Double.parseDouble(String.format("%.2f", cardProductModel.getMrp()));
+                    double totalRate = qtyVal * Double.parseDouble(String.format("%.2f", cardProductModel.getPrice()));
                     cardProductModel.setMrp_total(mrpTotal);
                     cardProductModel.setPrice_total(totalRate);
                     cardProductModel.setQty(qtyVal);

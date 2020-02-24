@@ -81,8 +81,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             holder.ll_spinner.setVisibility(View.GONE);
             final ProductUnitModel productUnitModel = productListModel.getProductUnitModelArrayList().get(0);
             String unit = productUnitModel.getProd_unit() + " " + productUnitModel.getProd_weight();
-            String rate = "Rs " + productUnitModel.getProd_rate();
-            String mrp = "MRP " + productUnitModel.getProd_mrp();
+            double rated=Double.parseDouble(productUnitModel.getProd_rate());
+            double mrpd=Double.parseDouble(productUnitModel.getProd_mrp());
+            String rate = "Rs " + String.format("%.2f", rated);
+            String mrp = "MRP " + String.format("%.2f", mrpd);
             holder.textUnitName.setText(unit);
             holder.textPrice.setText(rate);
             holder.textMrp.setText(mrp);
@@ -122,8 +124,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                         callQtyAdd(holder, String.valueOf(product_id));
                     } else {
                         String unit = productUnitmodel.getProd_unit() + " " + productUnitmodel.getProd_weight();
-                        String rate = "Rs " + productUnitmodel.getProd_rate();
-                        String mrp = "MRP " + productUnitmodel.getProd_mrp();
+                        double rated=Double.parseDouble(productUnitmodel.getProd_rate());
+                        double mrpd=Double.parseDouble(productUnitmodel.getProd_mrp());
+                        String rate = "Rs " + String.format("%.2f", rated);
+                        String mrp = "MRP " + String.format("%.2f", mrpd);
                         holder.textUnitName.setText(unit);
                         holder.textPrice.setText(rate);
                         holder.textMrp.setText(mrp);
@@ -153,8 +157,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 String qty = String.valueOf(holder.textQty.getText());
                 long qtyVal = cardProductModel.getQty() + 1;
                 long card_prod_id = cardProductModel.getProduct_id();
-                double mrpTotal = qtyVal * cardProductModel.getMrp();
-                double totalRate = qtyVal * cardProductModel.getPrice();
+                double mrpTotal = qtyVal * Double.parseDouble(String.format("%.2f", cardProductModel.getMrp()));
+                double totalRate = qtyVal * Double.parseDouble(String.format("%.2f", cardProductModel.getPrice()));
                 long idVal = appDatabase.getProductDAO().getProductDataUpdate(qtyVal, card_prod_id, totalRate, mrpTotal);
                 callQtyAdd(holder, product_id);
                 referenceCardUiInterface.reference();
@@ -171,8 +175,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                     notifyDataSetChanged();
                 } else {
                     long card_produt_id = cardProductModel.getProduct_id();
-                    double mrpTotal = qty * cardProductModel.getMrp();
-                    double totalRate = qty * cardProductModel.getPrice();
+                    double mrpTotal = qty * Double.parseDouble(String.format("%.2f", cardProductModel.getMrp()));
+                    double totalRate = qty * Double.parseDouble(String.format("%.2f", cardProductModel.getPrice()));
                     long idVal = appDatabase.getProductDAO().getProductDataUpdate(qty, card_produt_id, totalRate, mrpTotal);
                     callQtyAdd(holder, product_id);
                 }
@@ -192,12 +196,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             holder.ll_add_product.setVisibility(View.GONE);
             holder.textQty.setText(String.valueOf(qty));
 
-            double mrpTotal = qty * cardProductModel.getMrp();
-            double totalRate = qty * cardProductModel.getPrice();
+            double mrpTotal = qty *  cardProductModel.getMrp();
+            double totalRate =qty *cardProductModel.getPrice();
 
-
-            String mrp = "Rs " + mrpTotal;
-            String rate = "MRP " + totalRate;
+            String mrp =" MRP " + String.format("%.2f",mrpTotal);
+            String rate = "RS " + String.format("%.2f",totalRate);
             holder.textPrice.setText(rate);
             holder.textMrp.setText(mrp);
             holder.textMrp.setPaintFlags(holder.textMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -217,8 +220,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             long unit = Long.valueOf(productUnitModel.getProd_unit());
             String weight = productUnitModel.getProd_weight();
             String weight_id = productUnitModel.getProd_weight_id();
-            double rate =Double.parseDouble(productUnitModel.getProd_rate());
-            double mrp = Double.parseDouble(productUnitModel.getProd_mrp());
+
+            double rated =Double.parseDouble(productUnitModel.getProd_rate());
+            double mrpd = Double.parseDouble(productUnitModel.getProd_mrp());
+            double rate =Double.parseDouble(String.format("%.2f", rated));
+            double mrp = Double.parseDouble(String.format("%.2f", mrpd));
+
             long qty = Long.parseLong("1");
             long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, weight_id, mrp, mrp, rate, rate, qty, folder + productListModel.getProd_image()));
             if (idVal != 0) {
@@ -235,8 +242,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             long unit = Long.valueOf(productUnitModel.getProd_unit());
             String weight = productUnitModel.getProd_weight();
             String weight_id = productUnitModel.getProd_weight_id();
-            double rate = Double.parseDouble(productUnitModel.getProd_rate());
-            double mrp = Double.parseDouble(productUnitModel.getProd_mrp());
+
+            double rated =Double.parseDouble(productUnitModel.getProd_rate());
+            double mrpd = Double.parseDouble(productUnitModel.getProd_mrp());
+            double rate =Double.parseDouble(String.format("%.2f", rated));
+            double mrp = Double.parseDouble(String.format("%.2f", mrpd));
+
             long qty = Long.parseLong("1");
             long idVal = appDatabase.getProductDAO().addProduct(new CardProductModel(0, product_id, productName, id, unit, weight, weight_id, mrp, mrp, rate, rate, qty, folder + productListModel.getProd_image()));
             if (idVal != 0) {
