@@ -190,7 +190,6 @@ public class VegetableActivity extends AppCompatActivity implements ReferenceCar
                                 productListModelArrayList = successModule.getProductListModelArrayList();
                                 if (productListModelArrayList.size() != 0) {
                                     iv_no_data_found.setVisibility(View.GONE);
-                                    Collections.reverse(productListModelArrayList);
                                     productListAdapter = new ProductListAdapter(VegetableActivity.this, productListModelArrayList, folder, VegetableActivity.this);
                                     recyclerView_Vegetable.setAdapter(productListAdapter);
                                     productListAdapter.notifyDataSetChanged();

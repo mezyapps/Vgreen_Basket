@@ -4,474 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".view.fragment.HomeFragment">
 
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="200dp">
 
-
-            <LinearLayout
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-                <com.synnapps.carouselview.CarouselView
-                    android:id="@+id/carouselView"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    app:fillColor="@color/white"
-                    app:pageColor="@color/gray"
-                    app:radius="6dp"
-                    app:slideInterval="5000"
-                    app:strokeColor="@color/white"
-                    app:strokeWidth="1dp"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/dark_gray">
-
-
-                    <RelativeLayout
-                        android:id="@+id/ll_vegetable"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@color/light_gray"
-                        android:orientation="horizontal"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/vegetable"
-                            android:textAllCaps="true"
-                            android:textColor="@color/black"
-                            android:id="@+id/textVegetableHead"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:orientation="vertical"
-                            android:layout_marginStart="1dp"
-                            android:layout_marginTop="1dp"
-                            android:id="@+id/ll_potato"
-                            android:layout_marginEnd="1dp"
-                            android:weightSum="3">
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:src="@drawable/potato" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/potato"
-                                android:textAllCaps="true"
-                                android:textColor="@color/dark_gray"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:orientation="vertical"
-                            android:layout_marginTop="1dp"
-                            android:id="@+id/ll_tomato"
-                            android:layout_marginEnd="1dp">
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:src="@drawable/tomato" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/tomato"
-                                android:textAllCaps="true"
-                                android:textColor="@color/dark_gray"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:orientation="vertical"
-                            android:layout_marginStart="1dp"
-                            android:layout_marginTop="1dp"
-                            android:id="@+id/ll_onion"
-                            android:layout_marginEnd="1dp"
-                            android:weightSum="3">
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:src="@drawable/onion" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/onion"
-                                android:textAllCaps="true"
-                                android:textColor="@color/dark_gray"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:orientation="vertical"
-                            android:layout_marginTop="1dp"
-                            android:id="@+id/ll_bell_paper"
-                            android:layout_marginEnd="1dp"
-                            android:weightSum="3">
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:src="@drawable/bell_pepper" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/bell_pepper"
-                                android:textAllCaps="true"
-                                android:textColor="@color/dark_gray"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/dark_gray"/>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:id="@+id/rr_VegetableView"
-                        android:background="@color/white"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/view_all"
-                            android:textAllCaps="true"
-                            android:textColor="@color/dark_gray"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/dark_gray">
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@color/light_gray"
-                        android:orientation="horizontal"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:padding="10dp">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/fruit"
-                            android:textAllCaps="true"
-                            android:textColor="@color/black"
-                            android:id="@+id/textFruitHead"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:orientation="vertical"
-                            android:layout_marginStart="1dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginEnd="1dp"
-                            android:id="@+id/ll_apple"
-                            android:weightSum="3">
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:src="@drawable/apple" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/apple"
-                                android:textAllCaps="true"
-                                android:textColor="@color/dark_gray"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:orientation="vertical"
-                            android:layout_marginTop="1dp"
-                            android:id="@+id/ll_orange"
-                            android:layout_marginEnd="1dp">
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:src="@drawable/orange" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/orange"
-                                android:textAllCaps="true"
-                                android:textColor="@color/dark_gray"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:orientation="vertical"
-                            android:layout_marginStart="1dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginEnd="1dp"
-                            android:id="@+id/ll_watermelon"
-                            android:weightSum="3">
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:src="@drawable/watermelon" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/watermelon"
-                                android:textAllCaps="true"
-                                android:textColor="@color/dark_gray"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:orientation="vertical"
-                            android:id="@+id/ll_banana"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginEnd="1dp"
-                            android:weightSum="3">
-
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:src="@drawable/banana" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="@string/banana"
-                                android:textAllCaps="true"
-                                android:textColor="@color/dark_gray"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/dark_gray"/>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:background="@color/white"
-                        android:id="@+id/rr_FruitView"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/view_all"
-                            android:textAllCaps="true"
-                            android:textColor="@color/dark_gray"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
+                android:layout_height="match_parent"
+                app:fillColor="@color/white"
+                app:pageColor="@color/black"
+                app:radius="4dp"
+                app:slideInterval="5000"
+                app:strokeColor="@color/white"
+                app:strokeWidth="1dp" />
 
         </LinearLayout>
-    </ScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:cardCornerRadius="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                app:cardBackgroundColor="@color/white">
+
+                <RelativeLayout
+                    android:id="@+id/rr_vegetable"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:src="@drawable/vegetable" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/rr_fruit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/fruits" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </FrameLayout>

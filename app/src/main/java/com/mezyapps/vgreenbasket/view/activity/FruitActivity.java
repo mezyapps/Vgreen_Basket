@@ -186,11 +186,9 @@ public class FruitActivity extends AppCompatActivity  implements ReferenceCardUi
                             code = successModule.getCode();
                             folder=successModule.getFolder();
                             if (code.equalsIgnoreCase("1")) {
-
                                 productListModelArrayList=successModule.getProductListModelArrayList();
                                 if(productListModelArrayList.size()!=0) {
                                     iv_no_data_found.setVisibility(View.GONE);
-                                    Collections.reverse(productListModelArrayList);
                                     productListAdapter=new ProductListAdapter(FruitActivity.this,productListModelArrayList,folder,FruitActivity.this);
                                     recyclerView_Fruit.setAdapter(productListAdapter);
                                     productListAdapter.notifyDataSetChanged();

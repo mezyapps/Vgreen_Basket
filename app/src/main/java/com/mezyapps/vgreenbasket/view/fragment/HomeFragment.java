@@ -21,8 +21,7 @@ import com.synnapps.carouselview.ImageListener;
 
 public class HomeFragment extends Fragment {
     private  Context mContext;
-    private RelativeLayout rr_VegetableView,rr_FruitView;
-    private LinearLayout ll_potato,ll_tomato,ll_onion,ll_bell_paper,ll_apple,ll_orange,ll_watermelon,ll_banana;
+    private RelativeLayout  rr_vegetable,rr_fruit;
     //Image Slider Image Array;
     private int[] sampleImages = {R.drawable.slider1, R.drawable.slider2, R.drawable.slider3, R.drawable.slider4, R.drawable.slider5};
 
@@ -38,16 +37,9 @@ public class HomeFragment extends Fragment {
 
 
     private void find_View_IdS(View view) {
-        rr_VegetableView=view.findViewById(R.id.rr_VegetableView);
-        rr_FruitView=view.findViewById(R.id.rr_FruitView);
-        ll_potato=view.findViewById(R.id.ll_potato);
-        ll_tomato=view.findViewById(R.id.ll_tomato);
-        ll_onion=view.findViewById(R.id.ll_onion);
-        ll_bell_paper=view.findViewById(R.id.ll_bell_paper);
-        ll_apple=view.findViewById(R.id.ll_apple);
-        ll_orange=view.findViewById(R.id.ll_orange);
-        ll_watermelon=view.findViewById(R.id.ll_watermelon);
-        ll_banana=view.findViewById(R.id.ll_banana);
+        rr_vegetable=view.findViewById(R.id.rr_vegetable);
+        rr_fruit=view.findViewById(R.id.rr_fruit);
+
 
         //ImageSlider
         CarouselView carouselView=view.findViewById(R.id.carouselView);
@@ -56,63 +48,13 @@ public class HomeFragment extends Fragment {
 
     }
     private void events() {
-        rr_VegetableView.setOnClickListener(new View.OnClickListener() {
+        rr_vegetable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, VegetableActivity.class));
             }
         });
-        ll_potato.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, VegetableActivity.class));
-            }
-        });
-        ll_tomato.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, VegetableActivity.class));
-            }
-        });
-        ll_onion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, VegetableActivity.class));
-            }
-        });
-        ll_bell_paper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, VegetableActivity.class));
-            }
-        });
-
-        rr_FruitView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, FruitActivity.class));
-            }
-        });
-
-        ll_apple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, FruitActivity.class));
-            }
-        });
-        ll_orange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, FruitActivity.class));
-            }
-        });
-        ll_watermelon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, FruitActivity.class));
-            }
-        });
-        ll_banana.setOnClickListener(new View.OnClickListener() {
+        rr_fruit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, FruitActivity.class));

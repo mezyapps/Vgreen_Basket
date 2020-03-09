@@ -115,7 +115,7 @@ public class CardActivity extends AppCompatActivity implements ReferenceCardUiIn
             total_saved=total_saved+total_mrp;
         }
         total_saved_mrp=total_saved-total_rate;
-        textTotalAmt.setText("Rs "+total_rate);
-        textTotalSavedAmt.setText("Saved RS "+total_saved_mrp);
+        textTotalAmt.setText("Rs "+String.format("%.2f",total_rate));
+        textTotalSavedAmt.setText("Saved RS "+String.format("%.2f",total_saved_mrp));
     }
 }
