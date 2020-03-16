@@ -44,7 +44,6 @@ import retrofit2.Response;
 
 public class PaymentDetialsActivity extends AppCompatActivity {
     private ImageView iv_back;
-
     private ArrayList<CardProductModel> cardProductModelArrayList = new ArrayList<>();
     private AppDatabase appDatabase;
     private TextView textTotalAmt, textTotalSavedAmt, textName, textMobileNumber, textTotalMrp, textAddress;

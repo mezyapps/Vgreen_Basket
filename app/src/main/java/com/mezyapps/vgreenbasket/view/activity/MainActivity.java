@@ -207,14 +207,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentName = fragment.getClass().getSimpleName();
         if (fragmentName.equalsIgnoreCase("HomeFragment")) {
             text_app_name.setText(R.string.app_name);
-        } else if (fragmentName.equalsIgnoreCase("ChapterListFragment")) {
-            text_app_name.setText("Chapter List");
         } else if (fragmentName.equalsIgnoreCase("ChangePasswordFragment")) {
-            text_app_name.setText("Change Password");
-        } else if (fragmentName.equalsIgnoreCase("LunchFragment")) {
-            text_app_name.setText("Launch DC List");
-        } else if (fragmentName.equalsIgnoreCase("AddVisitorFragment")) {
-            text_app_name.setText("Visitor List");
+            text_app_name.setText(getString(R.string.change_password));
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
